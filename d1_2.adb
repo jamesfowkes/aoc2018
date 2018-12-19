@@ -1,28 +1,27 @@
 with get_stdin;
+with utils;
 with Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO;
 with Ada.Integer_Text_IO;
 with Ada.Strings.Unbounded;
-with Ada.Containers.Ordered_Maps;
+with Ada.Containers.Vectors;
 
 procedure d1_2 is
 
-  StdinArr : get_stdin.IntegerArray := get_stdin.get_ints;
-  Frequency: Integer := 0;
-  Count: Natural := 0;
-  FrequencyList: array (Natural range <>) of Integer;
+    StdinArr : get_stdin.IntegerArray := get_stdin.get_ints;
+    Frequency: Integer := 0;
+    Frequencies: utils.IntegerVector.Vector;
 begin
-  for I in StdinArr'Range loop
-    FCCursor := FrequencyCounter.Find(Frequency);
-    if FCCursor = FrequencyMap.No_Element then
-      FrequencyCounter.Insert (Frequency, 1);
-    else
-      Count := FrequencyMap.Element(FCCursor);
-      if Count = 1
-      FrequencyCounter.Replace_Element(
-        Position => FCCursor,
-        New_Item => Count + 1);
-    end if;
-    Frequency := Frequency + StdinArr(I);
-  end loop;
+    loop
+        for I in StdinArr'Range loop
+            Frequency := Frequency + StdinArr(I);
+                if (utils.int_in_vector(Frequency, Frequencies)) then
+                    goto Finish;
+                end if;
+            utils.IntegerVector.Append(Frequencies, Frequency);
+        end loop;
+    end loop;
+
+    <<Finish>>
+    Ada.Integer_Text_IO.Put(Frequency, Width => 0); Ada.Text_IO.Put_Line("");
 end;
