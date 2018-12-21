@@ -13,23 +13,23 @@ procedure d2_2 is
        B : Unbounded_String;
     end record;
 
-    function diff_strings(str1: in Unbounded_String; str2: in Unbounded_String) return Boolean is
-        found_diff : Boolean := false;
+    function diff_strings(str1: in Unbounded_String; str2: in Unbounded_String) return Natural is
+        found_diff : Natural := 0;
         chr1: Character;
         chr2: Character;
     begin
         if Length(str1) /= Length(str2) then
-            return False;
+            return 0;
         end if;
         for I in 1 .. Length(str1) loop
             chr1 := Element(str1, I);
             chr2 := Element(str2, I);
-            if found_diff then
+            if found_diff > 0 then
                 if chr1 /= chr2 then
-                    return False;
+                    return I;
                 end if;
             else
-                found_diff := chr1 /= chr2;
+                found_diff := I;
             end if;
         end loop;
         return found_diff;
@@ -41,10 +41,12 @@ procedure d2_2 is
             A => Ada.Strings.Unbounded.Null_Unbounded_String,
             B => Ada.Strings.Unbounded.Null_Unbounded_String
         );
+        diff_result: Natural := 0
     begin
         for I in arr'Range loop
-            if diff_strings(str, arr(I)) then
-                result := (valid => true, A => str, B => arr(I));
+            diff_result := diff_strings(str, arr(I)) 
+            if diff_result > 0 then
+                result := (valid => true, A => str(1 .. diff_result), B => arr(I));
                 exit;
             end if;
         end loop;

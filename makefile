@@ -1,7 +1,21 @@
-%.exe: %.adb
-	gnatmake $*
-	cat $*.txt | dos2unix | ./$*.exe
+ifdef OS
+   EXT=.exe
+else
+   EXT=
+endif
 
-%_2.exe: %_2.adb
-	gnatmake $*_2
-	cat $*.txt | dos2unix | ./$*_2.exe
+%$(EXT):
+	gnatmake -I. $*-src/$*
+	mv $* $*-src
+	mv $*.* $*-src
+	cat $*-src/$*.txt | dos2unix | ./$*-src/$*$(EXT)
+
+%_2$(EXT):
+	gnatmake -I. $*-src/$*_2
+	mv $*_2 $*-src
+	mv $*_2.* $*-src
+	cat $*-src/$*.txt | dos2unix | ./$*-src/$*_2$(EXT)
+
+%-clean:
+	rm $*-src/$*$(EXT)
+	rm $*-src/$*_2$(EXT)
