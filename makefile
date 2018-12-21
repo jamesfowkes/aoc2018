@@ -1,7 +1,7 @@
 ifdef OS
-   EXT=.exe
+    EXT=.exe
 else
-   EXT=
+    EXT=
 endif
 
 %$(EXT):

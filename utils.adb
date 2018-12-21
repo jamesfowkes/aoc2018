@@ -1,6 +1,7 @@
 with Ada.Containers.Vectors;
 with Ada.Containers.Vectors;
 package body utils is
+
     function int_in_vector(needle: Integer; haystack: IntegerVector.Vector) return Boolean is
         C : IntegerVector.Cursor;
     begin
