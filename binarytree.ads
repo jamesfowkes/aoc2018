@@ -9,6 +9,7 @@ package binarytree is
     procedure insert(value: in Integer);
 
     procedure find(value: in Integer; found: out binarytree_node);
+    function has(value: in Integer) return Boolean;
 
     procedure traverse_inorder(start_node: in binarytree_node);
 
@@ -22,7 +23,6 @@ private
     type node is
     record
         llink, rlink: binarytree_node;
-        ltag, rtag: boolean; -- true: link is child, false: link is thread
         value: Integer;
     end record;
 

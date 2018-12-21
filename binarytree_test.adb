@@ -27,7 +27,8 @@ begin
         Put_Line("1: Insert");
         Put_Line("2: Find");
         Put_Line("3: Traverse");
-        Put_Line("4: Exit");
+        Put_Line("4: Test");
+        Put_Line("5: Exit");
         Put_Line(" ");
 
         intio.Get(input);
@@ -45,11 +46,20 @@ begin
                     intio.put(input);
                 else
                     intio.put(input);
-                    Put_line(" not found");
+                    Put_Line(" not found");
                 end if;
             when 3 =>
                 binarytree.traverse_inorder(main);
             when 4 =>
+                for i in Integer range -10 .. 10 loop
+                    intio.put(input);
+                    if binarytree.has(i) then
+                        Put_Line(" found");
+                    else
+                        Put_Line(" not found");
+                    end if;
+                end loop;
+            when 5 =>
                 exit;
             when others =>
                 null;

@@ -53,8 +53,6 @@ package body binarytree is
         q.value := value;
         q.llink := null;
         q.rlink := null;
-        q.ltag := false;
-        q.rtag := false;
     end;
 
     procedure insert_node(parent: in out binarytree_node; q: in out binarytree_node; value: in Integer) is
@@ -93,6 +91,13 @@ package body binarytree is
         found := cur;
     end find;
 
+    function has(value: in Integer) return Boolean is
+        found: binarytree_node := null;
+    begin
+        find(value, found);
+        return found /= null;
+    end has;
+
     procedure traverse_inorder(start_node: in binarytree_node) is
         package node_stack is new stack(max => node_count, item => binarytree_node);
 
@@ -113,7 +118,7 @@ package body binarytree is
                     exit;
                 else
                     node_stack.pop(x);
-                    intio.Put(x.value);
+                    intio.Put(x.value, width => 0);
                     Ada.Text_IO.Put(", ");
                     cur := x.rlink;
                 end if;
