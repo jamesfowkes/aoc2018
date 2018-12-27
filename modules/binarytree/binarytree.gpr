@@ -1,0 +1,18 @@
+with "../stack/stack.gpr";
+
+project BinaryTree is
+
+    for Source_Dirs use (".");
+
+    for Languages use ("Ada");
+    for Object_Dir use "obj";
+    for Library_Dir use "lib";
+    for Library_Name use "BinaryTree";
+    for Library_Kind use "static";
+
+    package Compiler is
+        for Default_Switches ("ada") use
+                ("-g", "-O1", "-gnat05", "-gnatwa.Xe", "-gnaty", "-gnata", "-gnatf");
+    end Compiler;
+
+end BinaryTree;

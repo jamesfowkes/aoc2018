@@ -10,3 +10,10 @@
 # Sublime Text files
 *.sublime*
 
+# Library and Object Folders
+obj/
+lib/
+
+# Auto-generated project files
+auto.cgpr
+
