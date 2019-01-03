@@ -131,7 +131,11 @@ package body binarytree is
 
    function hasleft (root : binarytree_root) return Boolean is
    begin
-      return root.node.llink = null;
+      if root.node /= null then
+         return root.node.llink /= null;
+      else
+         return False;
+      end if;
    end hasleft;
 
    function hasleft (node : binarytree_node) return Boolean is
@@ -141,7 +145,11 @@ package body binarytree is
 
    function hasright (root : binarytree_root) return Boolean is
    begin
-      return root.node.rlink = null;
+      if root.node /= null then
+         return root.node.rlink /= null;
+      else
+         return False;
+      end if;
    end hasright;
 
    function hasright (node : binarytree_node) return Boolean is
