@@ -6,6 +6,7 @@
 
 # Executables
 *.exe
+**/harness
 
 # Sublime Text files
 *.sublime*

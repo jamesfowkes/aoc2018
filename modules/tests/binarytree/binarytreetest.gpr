@@ -4,7 +4,7 @@ with "binarytree/binarytree.gpr";
 project BinaryTreeTest is
 
    for Languages use ("Ada");
-   for Source_Dirs use ("./");
+   for Source_Dirs use ("./", "../", "../../", "../../../");
    for Object_Dir use "./";
    for Exec_Dir use "./";
    for Main use ("harness.adb");

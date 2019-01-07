@@ -1,14 +1,11 @@
-with "../stack/stack.gpr";
-with "../utils/utils.gpr";
-
-project BinaryTree is
+project Utils is
 
     for Source_Dirs use (".");
 
     for Languages use ("Ada");
     for Object_Dir use "obj";
     for Library_Dir use "lib";
-    for Library_Name use "BinaryTree";
+    for Library_Name use "Utils";
     for Library_Kind use "static";
 
     package Compiler is
@@ -16,4 +13,4 @@ project BinaryTree is
                 ("-g", "-O1", "-gnat05", "-gnatwa.Xe", "-gnaty", "-gnata", "-gnatf");
     end Compiler;
 
-end BinaryTree;
+end Utils;

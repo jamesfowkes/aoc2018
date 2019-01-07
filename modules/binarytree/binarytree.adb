@@ -1,9 +1,7 @@
 with stack;
-with Ada.Text_IO; use Ada.Text_IO;
+--  with Ada.Text_IO; use Ada.Text_IO;
 
 package body binarytree is
-
-   package intio is new Ada.Text_IO.Integer_IO (Integer);
 
    procedure init  (root : out binarytree_root) is
    begin
@@ -24,14 +22,14 @@ package body binarytree is
          root.node_count := root.node_count + 1;
          cur := root.node;
          loop
-            if value < cur.node_value then
+            if value <= cur.node_value then
                if cur.llink /= null then
                   cur := cur.llink;
                else
-                  Put ("Allocating new node for ");
-                  Put (Integer'Image (value));
-                  Put (" < ");
-                  Put_Line (Integer'Image (cur.node_value));
+                  --  Put ("Allocating new node for ");
+                  --  Put (Integer'Image (value));
+                  --  Put (" <= ");
+                  --  Put_Line (Integer'Image (cur.node_value));
                   allocate_node (new_node, value);
                   insert_node (cur, new_node, value);
                   exit;
@@ -40,10 +38,10 @@ package body binarytree is
                if cur.rlink /= null then
                   cur := cur.rlink;
                else
-                  Put ("Allocating new node for ");
-                  Put (Integer'Image (value));
-                  Put (" > ");
-                  Put_Line (Integer'Image (cur.node_value));
+                  --  Put ("Allocating new node for ");
+                  --  Put (Integer'Image (value));
+                  --  Put (" > ");
+                  --  Put_Line (Integer'Image (cur.node_value));
                   allocate_node (new_node, value);
                   insert_node (cur, new_node, value);
                   exit;
@@ -67,25 +65,24 @@ package body binarytree is
       parent : in out binarytree_node;
       to_insert : in out binarytree_node; value : in Integer) is
    begin
-      Put ("Inserting ");
-      Put (Integer'Image (value));
-      Put (" to ");
-      if value < parent.node_value then
-         Put ("left");
+      --  Put ("Inserting ");
+      --  Put (Integer'Image (value));
+      --  Put (" to ");
+      if value <= parent.node_value then
+         --  Put ("left");
          parent.llink := to_insert;
       else
-         Put ("right");
+         --  Put ("right");
          parent.rlink := to_insert;
       end if;
-      Put (" of ");
-      Put_Line (Integer'Image (parent.node_value));
+      --  Put (" of ");
+      --  Put_Line (Integer'Image (parent.node_value));
    end insert_node;
 
    procedure find (
       root : in binarytree_root;
       value : in Integer; found : out binarytree_node) is
       cur : binarytree_node := null;
---      find_count : Integer := 0;
    begin
       if root = null then
          found := null;
@@ -109,7 +106,7 @@ package body binarytree is
             if cur.node_value = value then
                found := cur;
                exit;
-            elsif cur.node_value < value then
+            elsif cur.node_value <= value then
                cur := cur.llink;
             elsif cur.node_value > value then
                cur := cur.rlink;
@@ -162,7 +159,9 @@ package body binarytree is
       return root.node_count;
    end count;
 
-   procedure traverse_inorder (root : in binarytree_root) is
+   procedure traverse_inorder (root : in binarytree_root;
+      vec : out utils.IntegerVector.Vector) is
+
       package node_stack is new stack (
          max => root.node_count, item => binarytree_node);
 
@@ -171,6 +170,8 @@ package body binarytree is
    begin
       loop
          if cur /= null then
+            --  Put ("Push ");
+            --  Put_Line (Integer'Image (cur.node_value));
             node_stack.push (cur);
             cur := cur.llink;
          else
@@ -178,13 +179,13 @@ package body binarytree is
                exit;
             else
                node_stack.pop (x);
-               intio.Put (x.node_value, Width => 0);
-               Ada.Text_IO.Put (", ");
+               --  Put ("Pop ");
+               --  Put_Line (Integer'Image (x.node_value));
+               vec.Append (x.node_value);
                cur := x.rlink;
             end if;
          end if;
       end loop;
-      Ada.Text_IO.Put_Line ("");
    end traverse_inorder;
 
    function value (node : in binarytree_node) return Integer is

@@ -7,24 +7,23 @@ with Ada.Exceptions;
 
 package body ada_main is
 
-   E138 : Short_Integer; pragma Import (Ada, E138, "system__os_lib_E");
    E018 : Short_Integer; pragma Import (Ada, E018, "system__soft_links_E");
    E026 : Short_Integer; pragma Import (Ada, E026, "system__exception_table_E");
+   E129 : Short_Integer; pragma Import (Ada, E129, "ada__containers_E");
    E055 : Short_Integer; pragma Import (Ada, E055, "ada__io_exceptions_E");
    E057 : Short_Integer; pragma Import (Ada, E057, "ada__tags_E");
    E054 : Short_Integer; pragma Import (Ada, E054, "ada__streams_E");
    E088 : Short_Integer; pragma Import (Ada, E088, "interfaces__c_E");
    E028 : Short_Integer; pragma Import (Ada, E028, "system__exceptions_E");
-   E141 : Short_Integer; pragma Import (Ada, E141, "system__file_control_block_E");
-   E136 : Short_Integer; pragma Import (Ada, E136, "system__file_io_E");
    E100 : Short_Integer; pragma Import (Ada, E100, "system__finalization_root_E");
    E098 : Short_Integer; pragma Import (Ada, E098, "ada__finalization_E");
    E102 : Short_Integer; pragma Import (Ada, E102, "system__storage_pools_E");
    E093 : Short_Integer; pragma Import (Ada, E093, "system__finalization_masters_E");
+   E143 : Short_Integer; pragma Import (Ada, E143, "system__storage_pools__subpools_E");
    E086 : Short_Integer; pragma Import (Ada, E086, "ada__calendar_E");
+   E141 : Short_Integer; pragma Import (Ada, E141, "system__assertions_E");
    E104 : Short_Integer; pragma Import (Ada, E104, "system__pool_global_E");
    E022 : Short_Integer; pragma Import (Ada, E022, "system__secondary_stack_E");
-   E132 : Short_Integer; pragma Import (Ada, E132, "ada__text_io_E");
    E078 : Short_Integer; pragma Import (Ada, E078, "ada_containers__aunit_lists_E");
    E005 : Short_Integer; pragma Import (Ada, E005, "aunit_E");
    E008 : Short_Integer; pragma Import (Ada, E008, "aunit__memory_E");
@@ -37,13 +36,14 @@ package body ada_main is
    E012 : Short_Integer; pragma Import (Ada, E012, "aunit__reporter_E");
    E114 : Short_Integer; pragma Import (Ada, E114, "aunit__reporter__text_E");
    E073 : Short_Integer; pragma Import (Ada, E073, "aunit__simple_test_cases_E");
-   E165 : Short_Integer; pragma Import (Ada, E165, "aunit__test_cases_E");
+   E147 : Short_Integer; pragma Import (Ada, E147, "aunit__test_cases_E");
    E124 : Short_Integer; pragma Import (Ada, E124, "aunit__test_suites_E");
    E122 : Short_Integer; pragma Import (Ada, E122, "aunit__run_E");
-   E130 : Short_Integer; pragma Import (Ada, E130, "binarytree_E");
    E128 : Short_Integer; pragma Import (Ada, E128, "binarytreetest_E");
    E126 : Short_Integer; pragma Import (Ada, E126, "binarytreetest_suite_E");
-   E163 : Short_Integer; pragma Import (Ada, E163, "stack_E");
+   E133 : Short_Integer; pragma Import (Ada, E133, "stack_E");
+   E135 : Short_Integer; pragma Import (Ada, E135, "utils_E");
+   E131 : Short_Integer; pragma Import (Ada, E131, "binarytree_E");
 
    Local_Priority_Specific_Dispatching : constant String := "";
    Local_Interrupt_States : constant String := "";
@@ -53,87 +53,87 @@ package body ada_main is
    procedure finalize_library is
    begin
       E128 := E128 - 1;
+      E135 := E135 - 1;
       declare
          procedure F1;
-         pragma Import (Ada, F1, "binarytreetest__finalize_spec");
+         pragma Import (Ada, F1, "utils__finalize_spec");
       begin
          F1;
       end;
-      E124 := E124 - 1;
       declare
          procedure F2;
-         pragma Import (Ada, F2, "aunit__test_suites__finalize_spec");
+         pragma Import (Ada, F2, "binarytreetest__finalize_spec");
       begin
          F2;
       end;
-      E165 := E165 - 1;
+      E124 := E124 - 1;
       declare
          procedure F3;
-         pragma Import (Ada, F3, "aunit__test_cases__finalize_spec");
+         pragma Import (Ada, F3, "aunit__test_suites__finalize_spec");
       begin
          F3;
+      end;
+      E147 := E147 - 1;
+      declare
+         procedure F4;
+         pragma Import (Ada, F4, "aunit__test_cases__finalize_spec");
+      begin
+         F4;
       end;
       E071 := E071 - 1;
       E073 := E073 - 1;
       declare
-         procedure F4;
-         pragma Import (Ada, F4, "aunit__simple_test_cases__finalize_spec");
-      begin
-         F4;
-      end;
-      E114 := E114 - 1;
-      declare
          procedure F5;
-         pragma Import (Ada, F5, "aunit__reporter__text__finalize_spec");
+         pragma Import (Ada, F5, "aunit__simple_test_cases__finalize_spec");
       begin
          F5;
       end;
-      E075 := E075 - 1;
+      E114 := E114 - 1;
       declare
          procedure F6;
-         pragma Import (Ada, F6, "aunit__assertions__finalize_spec");
+         pragma Import (Ada, F6, "aunit__reporter__text__finalize_spec");
       begin
          F6;
       end;
-      E082 := E082 - 1;
+      E075 := E075 - 1;
       declare
          procedure F7;
-         pragma Import (Ada, F7, "aunit__test_results__finalize_spec");
+         pragma Import (Ada, F7, "aunit__assertions__finalize_spec");
       begin
          F7;
       end;
+      E082 := E082 - 1;
       declare
          procedure F8;
-         pragma Import (Ada, F8, "aunit__test_filters__finalize_spec");
+         pragma Import (Ada, F8, "aunit__test_results__finalize_spec");
       begin
          F8;
       end;
       declare
          procedure F9;
-         pragma Import (Ada, F9, "aunit__tests__finalize_spec");
+         pragma Import (Ada, F9, "aunit__test_filters__finalize_spec");
       begin
-         E091 := E091 - 1;
          F9;
       end;
-      E132 := E132 - 1;
       declare
          procedure F10;
-         pragma Import (Ada, F10, "ada__text_io__finalize_spec");
+         pragma Import (Ada, F10, "aunit__tests__finalize_spec");
       begin
+         E091 := E091 - 1;
          F10;
       end;
-      declare
-         procedure F11;
-         pragma Import (Ada, F11, "system__file_io__finalize_body");
-      begin
-         E136 := E136 - 1;
-         F11;
-      end;
       E093 := E093 - 1;
+      E143 := E143 - 1;
       E104 := E104 - 1;
       declare
+         procedure F11;
+         pragma Import (Ada, F11, "system__pool_global__finalize_spec");
+      begin
+         F11;
+      end;
+      declare
          procedure F12;
-         pragma Import (Ada, F12, "system__pool_global__finalize_spec");
+         pragma Import (Ada, F12, "system__storage_pools__subpools__finalize_spec");
       begin
          F12;
       end;
@@ -240,6 +240,8 @@ package body ada_main is
       System.Soft_Links'Elab_Spec;
       System.Exception_Table'Elab_Body;
       E026 := E026 + 1;
+      Ada.Containers'Elab_Spec;
+      E129 := E129 + 1;
       Ada.Io_Exceptions'Elab_Spec;
       E055 := E055 + 1;
       Ada.Tags'Elab_Spec;
@@ -248,8 +250,6 @@ package body ada_main is
       Interfaces.C'Elab_Spec;
       System.Exceptions'Elab_Spec;
       E028 := E028 + 1;
-      System.File_Control_Block'Elab_Spec;
-      E141 := E141 + 1;
       System.Finalization_Root'Elab_Spec;
       E100 := E100 + 1;
       Ada.Finalization'Elab_Spec;
@@ -257,27 +257,24 @@ package body ada_main is
       System.Storage_Pools'Elab_Spec;
       E102 := E102 + 1;
       System.Finalization_Masters'Elab_Spec;
+      System.Storage_Pools.Subpools'Elab_Spec;
       Ada.Calendar'Elab_Spec;
       Ada.Calendar'Elab_Body;
       E086 := E086 + 1;
+      System.Assertions'Elab_Spec;
+      E141 := E141 + 1;
       System.Pool_Global'Elab_Spec;
       E104 := E104 + 1;
+      E143 := E143 + 1;
       System.Finalization_Masters'Elab_Body;
       E093 := E093 + 1;
-      System.File_Io'Elab_Body;
-      E136 := E136 + 1;
       E088 := E088 + 1;
       Ada.Tags'Elab_Body;
       E057 := E057 + 1;
       System.Soft_Links'Elab_Body;
       E018 := E018 + 1;
-      System.Os_Lib'Elab_Body;
-      E138 := E138 + 1;
       System.Secondary_Stack'Elab_Body;
       E022 := E022 + 1;
-      Ada.Text_Io'Elab_Spec;
-      Ada.Text_Io'Elab_Body;
-      E132 := E132 + 1;
       E008 := E008 + 1;
       E005 := E005 + 1;
       E080 := E080 + 1;
@@ -300,16 +297,18 @@ package body ada_main is
       E073 := E073 + 1;
       E071 := E071 + 1;
       Aunit.Test_Cases'Elab_Spec;
-      E165 := E165 + 1;
+      E147 := E147 + 1;
       Aunit.Test_Suites'Elab_Spec;
       E124 := E124 + 1;
       E122 := E122 + 1;
       Binarytreetest'Elab_Spec;
-      E128 := E128 + 1;
       Binarytreetest_Suite'Elab_Body;
       E126 := E126 + 1;
-      E163 := E163 + 1;
-      E130 := E130 + 1;
+      E133 := E133 + 1;
+      utils'elab_spec;
+      E135 := E135 + 1;
+      E131 := E131 + 1;
+      E128 := E128 + 1;
    end adainit;
 
    procedure Ada_Main_Program;
@@ -345,14 +344,15 @@ package body ada_main is
    end;
 
 --  BEGIN Object file/option list
-   --   /home/james/code/aoc2018/modules/tests/binarytree/binarytreetest.o
    --   /home/james/code/aoc2018/modules/tests/binarytree/binarytreetest_suite.o
    --   /home/james/code/aoc2018/modules/tests/binarytree/harness.o
+   --   /home/james/code/aoc2018/modules/tests/binarytree/binarytreetest.o
    --   -L/home/james/code/aoc2018/modules/tests/binarytree/
    --   -L/home/james/code/aoc2018/modules/tests/binarytree/
    --   -L/usr/lib/x86_64-linux-gnu/ada/adalib/aunit/
    --   -L/home/james/code/aoc2018/modules/binarytree/lib/
    --   -L/home/james/code/aoc2018/modules/stack/lib/
+   --   -L/home/james/code/aoc2018/modules/utils/lib/
    --   -L/usr/lib/gcc/x86_64-linux-gnu/6/adalib/
    --   -static
    --   -lgnat

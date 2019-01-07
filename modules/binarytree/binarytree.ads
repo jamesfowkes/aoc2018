@@ -1,3 +1,5 @@
+with utils;
+
 package binarytree is
 
    type binarytree_node is limited private;
@@ -20,7 +22,8 @@ package binarytree is
    function hasright (node : binarytree_node) return Boolean;
    function count (root : binarytree_root) return Integer;
 
-   procedure traverse_inorder (root : in binarytree_root);
+   procedure traverse_inorder (root : in binarytree_root;
+      vec : out utils.IntegerVector.Vector);
 
    function value (node : in binarytree_node) return Integer;
 
