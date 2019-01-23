@@ -1,5 +1,7 @@
 with Ada.Text_IO;
 with Ada.Strings;
+with Ada.Strings.Unbounded;
+with Ada.Text_IO.Unbounded_IO;
 
 package body get_stdin is
     function get_strs return StringArray is
@@ -7,7 +9,7 @@ package body get_stdin is
         arr  : StringArray(0..10000);
     begin
         while not Ada.Text_IO.End_Of_File loop
-            arr(counter) := Ada.Text_IO.Get_Line;
+            arr(counter) := Ada.Text_IO.Unbounded_IO.Get_Line;
             counter := counter + 1;
         end loop;
         
