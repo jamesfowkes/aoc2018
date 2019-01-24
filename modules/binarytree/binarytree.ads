@@ -5,12 +5,13 @@ package binarytree is
    type binarytree_node is limited private;
    type binarytree_root is limited private;
 
-   procedure init (root : out binarytree_root);
+   procedure init (root : out binarytree_root; debug : in Boolean);
 
    procedure allocate_node (q : out binarytree_node; value : in Integer);
    procedure insert_node (
       parent : in out binarytree_node;
-      to_insert : in out binarytree_node; value : in Integer
+      to_insert : in out binarytree_node; value : in Integer;
+      debug : Boolean
    );
 
    procedure insert (root : binarytree_root; value : in Integer);
@@ -51,6 +52,7 @@ private
    record
        node : binarytree_node;
        node_count : Integer;
+       debug : Boolean;
    end record;
 
 end binarytree;

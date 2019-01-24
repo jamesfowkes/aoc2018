@@ -1,13 +1,14 @@
 with stack;
---  with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Text_IO; use Ada.Text_IO;
 
 package body binarytree is
 
-   procedure init  (root : out binarytree_root) is
+   procedure init  (root : out binarytree_root; debug : in Boolean) is
    begin
       root := new binarytree.root;
       root.node := null;
       root.node_count := 0;
+      root.debug := debug;
    end init;
 
    procedure insert (root : binarytree_root; value : in Integer) is
@@ -18,6 +19,10 @@ package body binarytree is
          allocate_node (new_node, value);
          root.node := new_node;
          root.node_count := 1;
+         if root.debug then
+            Put ("Allocating new root for ");
+            Put_Line (Integer'Image (value));
+         end if;
       else
          root.node_count := root.node_count + 1;
          cur := root.node;
@@ -26,24 +31,28 @@ package body binarytree is
                if cur.llink /= null then
                   cur := cur.llink;
                else
-                  --  Put ("Allocating new node for ");
-                  --  Put (Integer'Image (value));
-                  --  Put (" <= ");
-                  --  Put_Line (Integer'Image (cur.node_value));
+                  if root.debug then
+                     Put ("Allocating new node for ");
+                     Put (Integer'Image (value));
+                     Put (" <= ");
+                     Put_Line (Integer'Image (cur.node_value));
+                  end if;
                   allocate_node (new_node, value);
-                  insert_node (cur, new_node, value);
+                  insert_node (cur, new_node, value, root.debug);
                   exit;
                end if;
             elsif value > cur.node_value then
                if cur.rlink /= null then
                   cur := cur.rlink;
                else
-                  --  Put ("Allocating new node for ");
-                  --  Put (Integer'Image (value));
-                  --  Put (" > ");
-                  --  Put_Line (Integer'Image (cur.node_value));
+                  if root.debug then
+                     Put ("Allocating new node for ");
+                     Put (Integer'Image (value));
+                     Put (" > ");
+                     Put_Line (Integer'Image (cur.node_value));
+                  end if;
                   allocate_node (new_node, value);
-                  insert_node (cur, new_node, value);
+                  insert_node (cur, new_node, value, root.debug);
                   exit;
                end if;
             else
@@ -63,25 +72,35 @@ package body binarytree is
 
    procedure insert_node (
       parent : in out binarytree_node;
-      to_insert : in out binarytree_node; value : in Integer) is
+      to_insert : in out binarytree_node; value : in Integer;
+      debug : in Boolean) is
    begin
-      --  Put ("Inserting ");
-      --  Put (Integer'Image (value));
-      --  Put (" to ");
+      if debug then
+         Put ("Inserting ");
+         Put (Integer'Image (value));
+         Put (" to ");
+      end if;
       if value <= parent.node_value then
-         --  Put ("left");
+         if debug then
+            Put ("left");
+         end if;
          parent.llink := to_insert;
       else
-         --  Put ("right");
+         if debug then
+            Put ("right");
+         end if;
          parent.rlink := to_insert;
       end if;
-      --  Put (" of ");
-      --  Put_Line (Integer'Image (parent.node_value));
+      if debug then
+         Put (" of ");
+         Put_Line (Integer'Image (parent.node_value));
+      end if;
    end insert_node;
 
    procedure find (
       root : in binarytree_root;
       value : in Integer; found : out binarytree_node) is
+
       cur : binarytree_node := null;
    begin
       if root = null then
@@ -99,17 +118,25 @@ package body binarytree is
          return;
       end if;
 
+      cur := root.node;
       loop
-         cur := root.node;
-
          if cur /= null then
             if cur.node_value = value then
                found := cur;
+               if root.debug then
+                  Put_Line ("Found");
+               end if;
                exit;
-            elsif cur.node_value <= value then
+            elsif value < cur.node_value then
                cur := cur.llink;
-            elsif cur.node_value > value then
+               if root.debug then
+                  Put_Line ("Going left");
+               end if;
+            elsif value > cur.node_value then
                cur := cur.rlink;
+               if root.debug then
+                  Put_Line ("Going right");
+               end if;
             end if;
          else
             found := null;
@@ -170,8 +197,10 @@ package body binarytree is
    begin
       loop
          if cur /= null then
-            --  Put ("Push ");
-            --  Put_Line (Integer'Image (cur.node_value));
+            if root.debug then
+               Put ("Push ");
+               Put_Line (Integer'Image (cur.node_value));
+            end if;
             node_stack.push (cur);
             cur := cur.llink;
          else
@@ -179,8 +208,10 @@ package body binarytree is
                exit;
             else
                node_stack.pop (x);
-               --  Put ("Pop ");
-               --  Put_Line (Integer'Image (x.node_value));
+               if root.debug then
+                  Put ("Pop ");
+                  Put_Line (Integer'Image (x.node_value));
+               end if;
                vec.Append (x.node_value);
                cur := x.rlink;
             end if;

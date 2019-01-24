@@ -6,7 +6,11 @@
 
 # Executables
 *.exe
+
+# Unit Test Files and Folders
 **/harness
+**/b__harness.*
+**/*.bexch
 
 # Sublime Text files
 *.sublime*

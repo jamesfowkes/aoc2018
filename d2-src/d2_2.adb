@@ -13,8 +13,8 @@ procedure d2_2 is
        B : Unbounded_String;
     end record;
 
-    function diff_strings(str1: in Unbounded_String; str2: in Unbounded_String) return Natural is
-        found_diff : Natural := 0;
+    function diff_strings_one_character(str1: in Unbounded_String; str2: in Unbounded_String) return Natural is
+        found_diff_index : Natural := 0;
         chr1: Character;
         chr2: Character;
     begin
@@ -24,16 +24,19 @@ procedure d2_2 is
         for I in 1 .. Length(str1) loop
             chr1 := Element(str1, I);
             chr2 := Element(str2, I);
-            if found_diff > 0 then
-                if chr1 /= chr2 then
-                    return I;
+
+            if chr1 /= chr2 then
+                if found_diff_index = 0 then
+                    found_diff_index := I;
+                else
+                    found_diff_index := 0; -- More than one diff found, so not a valid string
+                    exit;
                 end if;
-            else
-                found_diff := I;
             end if;
         end loop;
-        return found_diff;
-    end diff_strings;
+
+        return found_diff_index;
+    end diff_strings_one_character;
 
     function diff_str_with_array(str: in Unbounded_String; arr: in get_stdin.StringArray) return StringPair is
         result : StringPair := (
@@ -41,12 +44,12 @@ procedure d2_2 is
             A => Ada.Strings.Unbounded.Null_Unbounded_String,
             B => Ada.Strings.Unbounded.Null_Unbounded_String
         );
-        diff_result: Natural := 0
+        diff_result: Natural := 0;
     begin
         for I in arr'Range loop
-            diff_result := diff_strings(str, arr(I)) 
+            diff_result := diff_strings_one_character(str, arr(I)); 
             if diff_result > 0 then
-                result := (valid => true, A => str(1 .. diff_result), B => arr(I));
+                result := (valid => true, A => Ada.Strings.Unbounded.Unbounded_Slice(str, 1, diff_result), B => arr(I));
                 exit;
             end if;
         end loop;
