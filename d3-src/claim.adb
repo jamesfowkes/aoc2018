@@ -4,22 +4,13 @@ with Ada.Integer_Text_IO;
 package body Claim is
 
    function ClaimsOverlap(c1: in ClaimRecord; c2: in ClaimRecord) return Boolean is
-      c1x_starts_in_c2x : Boolean := false;
-      c1y_starts_in_c2y : Boolean := false;
-      c1_starts_in_c2 : Boolean := false;
-      c2x_starts_in_c1x : Boolean := false;
-      c2y_starts_in_c1y : Boolean := false;
-      c2_starts_in_c1 : Boolean := false;
    begin
-      c1x_starts_in_c2x := (c1.cstart.x >= c2.cstart.x) and (c1.cstart.x <= c2.cend.x);
-      c1y_starts_in_c2y := (c1.cstart.y >= c2.cstart.y) and (c1.cstart.y <= c2.cend.y);
-      c1_starts_in_c2 := c1x_starts_in_c2x and c1y_starts_in_c2y;
-
-      c2x_starts_in_c1x := (c2.cstart.x >= c1.cstart.x) and (c2.cstart.x <= c1.cend.x);
-      c2y_starts_in_c1y := (c2.cstart.y >= c1.cstart.y) and (c2.cstart.y <= c1.cend.y);
-      c2_starts_in_c1 := c2x_starts_in_c1x and c2y_starts_in_c1y;
-
-      return c1_starts_in_c2 or c2_starts_in_c1;
+      return (
+         (c1.cstart.x <= c2.cend.x) and
+         (c1.cend.x >= c2.cstart.x) and
+         (c1.cstart.y <= c2.cend.y) and
+         (c1.cend.y >= c2.cstart.y)
+      );
    end ClaimsOverlap;
 
     function From_String(s: in UStr.Unbounded_String) return ClaimRecord is
@@ -59,6 +50,10 @@ package body Claim is
       Ada.Integer_Text_IO.Put(c.cend.x - c.cstart.x + 1, width => 0);
       Ada.Text_IO.Put("x");
       Ada.Integer_Text_IO.Put(c.cend.y - c.cstart.y + 1, width => 0);
+      Ada.Text_IO.Put(": ");
+      Ada.Integer_Text_IO.Put(c.cend.x, width => 0);
+      Ada.Text_IO.Put(",");
+      Ada.Integer_Text_IO.Put(c.cend.y, width => 0);
       Ada.Text_IO.Put_Line("");
    end Print;
 
