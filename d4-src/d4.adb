@@ -2,6 +2,8 @@ with Ada.Strings.Unbounded;
 with Ada.Containers.Vectors;
 with get_stdin;
 with Activity;
+with Guard;
+
 procedure d4 is
 
    package UStr renames Ada.Strings.Unbounded;
@@ -9,6 +11,7 @@ procedure d4 is
    StdinArr : get_stdin.StringArray := get_stdin.get_strs;
    v : Activity.ActivityRecord;
    Activities : Activity.ActivityVector.Vector;
+   GuardActivities : Guard.GuardActivity.Map;
 begin
    for I in StdinArr'Range loop
       v := Activity.From_String(StdinArr(I));
