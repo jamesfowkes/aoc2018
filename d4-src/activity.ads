@@ -20,4 +20,8 @@ package Activity is
    
    procedure Print(a :in ActivityRecord);
 
+   function "<" (L, R : ActivityRecord) return Boolean;
+   
+   package Sorter is new ActivityVector.Generic_Sorting;
+
 end Activity;

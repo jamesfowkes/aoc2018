@@ -1,5 +1,6 @@
 with Ada.Integer_Text_IO;
 with Ada.Text_IO;
+with Ada.Containers.Vectors;
 
 package body Activity is
 
@@ -49,8 +50,6 @@ package body Activity is
       Ada.Text_IO.Put(" ");
 
       s := Ada.Calendar.Seconds(a.dt);
-      -- Ada.Integer_Text_IO.Put(Integer(s), width => 0);
-      -- Ada.Text_IO.Put(" ");
       h := Integer(s) / 3600;
       m := (Integer(s) - (h * 3600)) / 60;
       if h < 10 then
@@ -66,4 +65,10 @@ package body Activity is
 
       Ada.Text_IO.Put_Line(UStr.To_String(a.str));
    end Print;
+
+   function "<" (L, R : ActivityRecord) return Boolean is
+   begin
+      return Ada.Calendar."<"(L.dt, R.dt);
+   end "<";
+
 end Activity;

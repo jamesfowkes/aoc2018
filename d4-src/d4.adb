@@ -13,6 +13,12 @@ begin
    for I in StdinArr'Range loop
       v := Activity.From_String(StdinArr(I));
       Activities.Append(v);
-      Activity.Print(v);
    end loop;
+
+   Activity.Sorter.Sort(Container => Activities);
+
+   for I in StdinArr'Range loop
+      Activity.Print(Activities(I));
+   end loop;
+
 end;
