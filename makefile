@@ -24,3 +24,7 @@ INCLUDES = -I. \
 %-clean:
 	rm $*-src/$*$(EXT)
 	rm $*-src/$*_2$(EXT)
+
+clean:
+	rm *.o
+	rm *.ali
