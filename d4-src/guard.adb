@@ -22,6 +22,7 @@ package body Guard is
       CurrentActivities : Activity.ActivityVector.Vector;
    begin
       for I in AllActivities.First_Index .. AllActivities.Last_Index loop
+         
          if Activity.IsChangeOfGuard(AllActivities(I)) then
             if CurrentGuardID /= -1 then
                if not map.Contains(CurrentGuardID) then
@@ -30,6 +31,7 @@ package body Guard is
                   map.Replace(CurrentGuardID, New_Item => CurrentActivities);
                end if;
                Activity.ActivityVector.Clear(CurrentActivities);
+               CurrentActivities.Append(AllActivities(I));
             end if;
 
             CurrentGuardID := Activity.GetGuardID(AllActivities(I));
@@ -45,7 +47,7 @@ package body Guard is
             end if;
          else
             CurrentActivities.Append(AllActivities(I));
-         end if;
+         end if;            
       end loop;
       return map;
    end ParseGuardActivities;
