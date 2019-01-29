@@ -17,8 +17,11 @@ package Activity is
       Index_Type => Natural);
 
    function From_String(s: in UStr.Unbounded_String) return ActivityRecord;
-   
+   function IsChangeOfGuard(a: in ActivityRecord) return Boolean;
+   function GetGuardID(a: in ActivityRecord) return Integer;
+
    procedure Print(a :in ActivityRecord);
+   procedure Print(v :in ActivityVector.Vector);
 
    function "<" (L, R : ActivityRecord) return Boolean;
    

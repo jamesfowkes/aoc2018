@@ -3,6 +3,8 @@ with Ada.Text_IO;
 with Ada.Containers.Vectors;
 
 package body Activity is
+   
+   use ActivityVector;
 
    function From_String(s: in UStr.Unbounded_String) return ActivityRecord is
       year: Integer := 0;
@@ -28,6 +30,22 @@ package body Activity is
 
       return activity;
    end From_String;
+   
+   function IsChangeOfGuard(a: in ActivityRecord) return Boolean is
+   begin
+      -- Text is e.g. "Guard #2927 begins shift"
+      return UStr.Slice(a.str, 1, 5) = "Guard";
+   end IsChangeOfGuard;
+
+   function GetGuardID(a: in ActivityRecord) return Integer is
+      id : Integer := -1;
+   begin
+      if IsChangeOfGuard(a) then
+         -- Text is e.g. "Guard #2927 begins shift"
+         id := Integer'Value(UStr.Slice(a.str, 8, 11));
+      end if;
+      return id;
+   end GetGuardID;
 
    procedure Print(a :in ActivityRecord) is
       s : Ada.Calendar.Day_Duration := 0.0;
@@ -64,6 +82,16 @@ package body Activity is
       Ada.Text_IO.Put(":00] ");
 
       Ada.Text_IO.Put_Line(UStr.To_String(a.str));
+   end Print;
+
+   procedure Print(v :in ActivityVector.Vector) is
+      C: ActivityVector.Cursor := v.First;
+   begin
+      loop
+         exit when C = ActivityVector.No_Element;
+         Print(Element(C));
+         C := ActivityVector.Next(C);
+      end loop;
    end Print;
 
    function "<" (L, R : ActivityRecord) return Boolean is

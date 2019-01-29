@@ -11,7 +11,7 @@ procedure d4 is
    StdinArr : get_stdin.StringArray := get_stdin.get_strs;
    v : Activity.ActivityRecord;
    Activities : Activity.ActivityVector.Vector;
-   GuardActivities : Guard.GuardActivity.Map;
+   GuardActivityMap : Guard.GuardActivityMap.Map;
 begin
    for I in StdinArr'Range loop
       v := Activity.From_String(StdinArr(I));
@@ -24,4 +24,7 @@ begin
       Activity.Print(Activities(I));
    end loop;
 
+   GuardActivityMap := Guard.ParseGuardActivities(Activities);
+
+   Guard.PrintActivityMap(GuardActivityMap);
 end;
