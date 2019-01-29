@@ -1,5 +1,3 @@
-with Ada.Text_IO;
-with Ada.Integer_Text_IO;
 
 with Ada.Containers.Hashed_Maps;
 
@@ -35,15 +33,8 @@ package body Guard is
             end if;
 
             CurrentGuardID := Activity.GetGuardID(AllActivities(I));
-            Ada.Text_IO.Put("Guard #");
-            Ada.Integer_Text_IO.Put(CurrentGuardID);
             if map.Contains(CurrentGuardID) then
-               Ada.Text_IO.Put(" already exists with ");
                CurrentActivities := map(CurrentGuardID);
-               Ada.Integer_Text_IO.Put(Integer(Activity.ActivityVector.Length(CurrentActivities)));
-               Ada.Text_IO.Put_Line(" entries");
-            else
-               Ada.Text_IO.Put_Line(" does not exist");
             end if;
          else
             CurrentActivities.Append(AllActivities(I));
@@ -57,9 +48,6 @@ package body Guard is
    begin
       loop
          exit when C = GuardActivityMap.No_Element;
-         Ada.Text_IO.Put("Guard #");
-         Ada.Integer_Text_IO.Put(Key(C));
-         Ada.Text_IO.Put_Line(":");
          Activity.Print(Element(C));
          C := GuardActivityMap.Next(C);
       end loop;
