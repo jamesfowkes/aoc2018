@@ -1,4 +1,3 @@
-
 with Ada.Containers.Hashed_Maps;
 
 with Activity;
@@ -43,6 +42,11 @@ package body Guard is
       return map;
    end ParseGuardActivities;
 
+   function GetSleepDurations(GuardActivities: in GuardActivityMap.Map) return GuardDurationMap.Map is
+      map: GuardDurationMap.Map;
+   begin
+      return map;
+   end;
    procedure PrintActivityMap(Map: in GuardActivityMap.Map) is
       C: GuardActivityMap.Cursor := Map.First;
    begin
@@ -52,4 +56,5 @@ package body Guard is
          C := GuardActivityMap.Next(C);
       end loop;
    end PrintActivityMap;
+
 end Guard;

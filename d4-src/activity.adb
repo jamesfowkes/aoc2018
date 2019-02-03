@@ -1,6 +1,7 @@
 with Ada.Integer_Text_IO;
 with Ada.Text_IO;
 with Ada.Containers.Vectors;
+with Ada.Calendar.Arithmetic;
 
 package body Activity is
    
@@ -46,6 +47,34 @@ package body Activity is
       end if;
       return id;
    end GetGuardID;
+
+   function GetMinutesAsleep(activities: in ActivityVector.Vector) return Integer is
+      AwakeActivity: ActivityRecord;
+      AsleepActivity: ActivityRecord;
+      MinutesAsleep: Integer := 0;
+      DiffDays: Ada.Calendar.Arithmetic.Day_Count;
+      DiffSeconds: Duration;
+      DiffLeapSeconds: Ada.Calendar.Arithmetic.Leap_Seconds_Count;
+      ActivityCursor: ActivityVector.Cursor := ActivityVector.First(activities);
+   begin
+      ActivityVector.Next(ActivityCursor);
+      while ActivityVector.Has_Element(ActivityCursor) loop
+         AsleepActivity := ActivityVector.Element(ActivityCursor);
+         ActivityVector.Next(ActivityCursor);
+         if not ActivityVector.Has_Element(ActivityCursor) then
+            exit;
+         end if;
+         AwakeActivity := ActivityVector.Element(ActivityCursor);
+         ActivityVector.Next(ActivityCursor);
+         Ada.Calendar.Arithmetic.Difference(
+            AwakeActivity.dt,
+            AsleepActivity.dt,
+            DiffDays, DiffSeconds, DiffLeapSeconds
+         );
+         MinutesAsleep := MinutesAsleep + Integer(DiffSeconds);
+      end loop;
+      return MinutesAsleep / 60;
+   end;
 
    procedure Print(a :in ActivityRecord) is
       s : Ada.Calendar.Day_Duration := 0.0;

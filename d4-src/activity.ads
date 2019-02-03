@@ -19,6 +19,7 @@ package Activity is
    function From_String(s: in UStr.Unbounded_String) return ActivityRecord;
    function IsChangeOfGuard(a: in ActivityRecord) return Boolean;
    function GetGuardID(a: in ActivityRecord) return Integer;
+   function GetMinutesAsleep(activities: in ActivityVector.Vector) return Integer;
 
    procedure Print(a :in ActivityRecord);
    procedure Print(v :in ActivityVector.Vector);

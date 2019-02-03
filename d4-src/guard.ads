@@ -14,7 +14,16 @@ package Guard is
       "=" => Activity.ActivityVector."="
    );
 
+   package GuardDurationMap is new Ada.Containers.Indefinite_Hashed_Maps(
+      Key_Type => Integer,
+      Element_Type => Integer,
+      Hash => IntegerHash,
+      Equivalent_Keys => "="
+   );
+
    function ParseGuardActivities(AllActivities: in Activity.ActivityVector.Vector) return GuardActivityMap.Map;
+   function GetSleepDurations(GuardActivities: in GuardActivityMap.Map) return GuardDurationMap.Map;
 
    procedure PrintActivityMap(Map: in GuardActivityMap.Map);
+
 end Guard;
