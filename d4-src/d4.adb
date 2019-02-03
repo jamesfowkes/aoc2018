@@ -24,7 +24,13 @@ procedure d4 is
       ActivityMapCursor: Guard.GuardActivityMap.Cursor := Guard.GuardActivityMap.First(GuardActivityMap);
    begin
       while Guard.GuardActivityMap.Has_Element(ActivityMapCursor) loop
-         Ada.Integer_Text_IO.Put(Activity.GetMinutesAsleep(Guard.GuardActivityMap.Element(ActivityMapCursor)), Width => 0);
+         Ada.Text_IO.Put("Guard #");
+         Ada.Integer_Text_IO.Put(Guard.GuardActivityMap.Key(ActivityMapCursor), Width => 0);
+         Ada.Text_IO.Put(": ");
+         Ada.Integer_Text_IO.Put(
+            Activity.GetMinutesAsleep(Guard.GuardActivityMap.Element(ActivityMapCursor)),
+            Width => 0
+         );
          Ada.Text_IO.Put_Line("");
          Guard.GuardActivityMap.Next(ActivityMapCursor);
       end loop;
@@ -51,6 +57,8 @@ procedure d4 is
       AwakeActivity: Activity.ActivityRecord;
       AsleepActivity: Activity.ActivityRecord;
       ActivityCursor: Activity.ActivityVector.Cursor := Activity.ActivityVector.First(GuardsActivities);
+      StartMinute : Integer;
+      EndMinute : Integer;
       MinuteCounter: Types.IntegerArray(0..59) := (others => 0);
    begin
       Activity.ActivityVector.Next(ActivityCursor);
@@ -62,8 +70,15 @@ procedure d4 is
          end if;
          AwakeActivity := Activity.ActivityVector.Element(ActivityCursor);
          Activity.ActivityVector.Next(ActivityCursor);
+
+         StartMinute := Activity.GetMinute(AsleepActivity);
+         EndMinute := Activity.GetMinute(AwakeActivity) - 1;
+
+         for I in Integer range StartMinute .. EndMinute loop
+            MinuteCounter(I) := MinuteCounter(I) + 1;
+         end loop;
       end loop;
-      return 0;
+      return Types.MaximumIndex(MinuteCounter);
    end;
    
 begin
@@ -79,9 +94,9 @@ begin
    -- end loop;
 
    GuardActivityMap := Guard.ParseGuardActivities(Activities);
-   Guard.PrintActivityMap(GuardActivityMap);
+   -- Guard.PrintActivityMap(GuardActivityMap);
 
-   -- PrintMinutesAsleep(GuardActivityMap);
+   PrintMinutesAsleep(GuardActivityMap);
 
    HighestMinutesAsleepGuardID := GetHighestMinutesAsleepGuardID(GuardActivityMap);
 
@@ -89,5 +104,11 @@ begin
    Ada.Text_IO.Put_Line("");
 
    MostFrequentMinuteAsleep := GetMostFrequentMinuteAsleep(GuardActivityMap(HighestMinutesAsleepGuardID));
+
+   Ada.Integer_Text_IO.Put(MostFrequentMinuteAsleep, width => 0);
+   Ada.Text_IO.Put_Line("");
+
+   Ada.Integer_Text_IO.Put(MostFrequentMinuteAsleep * HighestMinutesAsleepGuardID, width => 0);
+   Ada.Text_IO.Put_Line("");
 
 end;

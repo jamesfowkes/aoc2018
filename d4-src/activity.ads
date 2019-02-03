@@ -21,6 +21,8 @@ package Activity is
    function GetGuardID(a: in ActivityRecord) return Integer;
    function GetMinutesAsleep(activities: in ActivityVector.Vector) return Integer;
 
+   function GetMinute(a: in ActivityRecord) return Integer;
+   
    procedure Print(a :in ActivityRecord);
    procedure Print(v :in ActivityVector.Vector);
 

@@ -76,6 +76,11 @@ package body Activity is
       return MinutesAsleep / 60;
    end;
 
+   function GetMinute(a: in ActivityRecord) return Integer is
+   begin
+      return Integer(Ada.Calendar.Seconds(a.dt) / 60);
+   end;
+
    procedure Print(a :in ActivityRecord) is
       s : Ada.Calendar.Day_Duration := 0.0;
       h : Integer := 0;
