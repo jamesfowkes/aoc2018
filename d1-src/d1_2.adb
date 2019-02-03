@@ -1,15 +1,17 @@
-with get_stdin;
-with utils;
-with binarytree;
 with Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO;
 with Ada.Integer_Text_IO;
 with Ada.Strings.Unbounded;
 with Ada.Containers.Vectors;
 
+with get_stdin;
+with utils;
+with binarytree;
+with Types;
+
 procedure d1_2 is
 
-    stdin_arr : get_stdin.IntegerArray := get_stdin.get_ints;
+    stdin_arr : Types.IntegerArray := get_stdin.get_ints;
     frequency: Integer := 0;
     frequencies: binarytree.binarytree_root;
 begin

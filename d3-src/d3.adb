@@ -1,8 +1,10 @@
-with get_stdin;
 with Ada.Text_IO;
 with Ada.Strings.Unbounded;
 with Ada.Strings.Hash;
 with Ada.Containers.Hashed_Maps;
+
+with get_stdin;
+with Types;
 with Claim;
 with Coord;
 
@@ -16,7 +18,7 @@ procedure d3 is
       Hash => Coord.Hash,
       Equivalent_Keys => Coord."=");
 
-   StdinArr : get_stdin.StringArray := get_stdin.get_strs;
+   StdinArr : Types.StringArray := get_stdin.get_strs;
    Claims : Claim.ClaimVector.Vector;
    Fabric : FabricMap.Map;
    Count : Integer := 0;

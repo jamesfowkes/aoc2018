@@ -1,14 +1,16 @@
-with get_stdin;
 with Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO;
 with Ada.Integer_Text_IO;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
+with get_stdin;
+with Types;
+
 procedure d2 is
 
     type alphabetcount is array(Natural range 0..25) of Natural;
 
-    StdinArr : get_stdin.StringArray := get_stdin.get_strs;
+    StdinArr : Types.StringArray := get_stdin.get_strs;
     TwoCount: Integer := 0;
     ThreeCount: Integer := 0;
 

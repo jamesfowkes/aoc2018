@@ -1,15 +1,17 @@
-with get_stdin;
 with Ada.Text_IO;
 with Ada.Strings.Unbounded;
 with Ada.Strings.Hash;
 with Ada.Containers.Hashed_Maps;
+
 with Claim;
+with Types;
+with get_stdin;
 
 procedure d3_2 is
 
    package UStr renames Ada.Strings.Unbounded;
 
-   StdinArr : get_stdin.StringArray := get_stdin.get_strs;
+   StdinArr : Types.StringArray := get_stdin.get_strs;
    Claims : Claim.ClaimVector.Vector;
    Overlap : Boolean := False;
 begin

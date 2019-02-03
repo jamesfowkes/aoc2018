@@ -1,8 +1,10 @@
-with get_stdin;
 with Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO;
 with Ada.Integer_Text_IO;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+
+with get_stdin;
+with Types;
 
 procedure d2_2 is
 
@@ -38,7 +40,7 @@ procedure d2_2 is
         return found_diff_index;
     end diff_strings_one_character;
 
-    function diff_str_with_array(str: in Unbounded_String; arr: in get_stdin.StringArray) return StringPair is
+    function diff_str_with_array(str: in Unbounded_String; arr: in Types.StringArray) return StringPair is
         result : StringPair := (
             valid => false,
             A => Ada.Strings.Unbounded.Null_Unbounded_String,
@@ -56,7 +58,7 @@ procedure d2_2 is
         return result;
     end diff_str_with_array;
 
-    stdin_arr : get_stdin.StringArray := get_stdin.get_strs;
+    stdin_arr : Types.StringArray := get_stdin.get_strs;
     result : StringPair := (
         valid => false,
         A => Ada.Strings.Unbounded.Null_Unbounded_String,

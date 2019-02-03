@@ -1,10 +1,8 @@
 with Ada.Strings.Unbounded;
+with types;
 
-package get_stdin is
-    type StringArray is array (Natural range <>) of Ada.Strings.Unbounded.Unbounded_String;
-    type IntegerArray is array (Natural range <>) of Integer;
-    
-    function get_strs return StringArray;
-    function get_ints return IntegerArray;
+package get_stdin is    
+    function get_strs return Types.StringArray;
+    function get_ints return Types.IntegerArray;
 
 end get_stdin;
