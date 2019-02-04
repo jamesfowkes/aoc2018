@@ -3,6 +3,8 @@ with Ada.Text_IO;
 with Ada.Containers.Vectors;
 with Ada.Calendar.Arithmetic;
 
+with Types;
+
 package body Activity is
    
    use ActivityVector;
@@ -48,27 +50,36 @@ package body Activity is
       return id;
    end GetGuardID;
 
-   function GetMinutesAsleep(activities: in ActivityVector.Vector) return Integer is
+   function GetNextSleepPeriod(ActivityCursor: in out ActivityVector.Cursor; ThisSleepPeriod: out SleepPeriod) return Boolean is
       AwakeActivity: ActivityRecord;
       AsleepActivity: ActivityRecord;
+   begin
+      ActivityVector.Next(ActivityCursor);
+      if ActivityVector.Has_Element(ActivityCursor) then
+         AsleepActivity := ActivityVector.Element(ActivityCursor);
+         ActivityVector.Next(ActivityCursor);
+         if ActivityVector.Has_Element(ActivityCursor) then
+            AwakeActivity := ActivityVector.Element(ActivityCursor);   
+            ThisSleepPeriod.asleep := AsleepActivity;
+            ThisSleepPeriod.awake := AwakeActivity;
+            return True;
+         end if;
+      end if;
+      return False;
+   end;
+
+   function GetMinutesAsleep(activities: in ActivityVector.Vector) return Integer is
+      ThisSleepPeriod: SleepPeriod;
       MinutesAsleep: Integer := 0;
       DiffDays: Ada.Calendar.Arithmetic.Day_Count;
       DiffSeconds: Duration;
       DiffLeapSeconds: Ada.Calendar.Arithmetic.Leap_Seconds_Count;
       ActivityCursor: ActivityVector.Cursor := ActivityVector.First(activities);
    begin
-      ActivityVector.Next(ActivityCursor);
-      while ActivityVector.Has_Element(ActivityCursor) loop
-         AsleepActivity := ActivityVector.Element(ActivityCursor);
-         ActivityVector.Next(ActivityCursor);
-         if not ActivityVector.Has_Element(ActivityCursor) then
-            exit;
-         end if;
-         AwakeActivity := ActivityVector.Element(ActivityCursor);
-         ActivityVector.Next(ActivityCursor);
+      while GetNextSleepPeriod(ActivityCursor, ThisSleepPeriod) loop
          Ada.Calendar.Arithmetic.Difference(
-            AwakeActivity.dt,
-            AsleepActivity.dt,
+            ThisSleepPeriod.awake.dt,
+            ThisSleepPeriod.asleep.dt,
             DiffDays, DiffSeconds, DiffLeapSeconds
          );
          MinutesAsleep := MinutesAsleep + Integer(DiffSeconds);
@@ -79,6 +90,36 @@ package body Activity is
    function GetMinute(a: in ActivityRecord) return Integer is
    begin
       return Integer(Ada.Calendar.Seconds(a.dt) / 60);
+   end;
+
+   function GetSleepFrequencyPerMinute(
+      GuardsActivities: in Activity.ActivityVector.Vector
+   ) return Types.IntegerArray is
+      ThisSleepPeriod: SleepPeriod;
+      ActivityCursor: Activity.ActivityVector.Cursor := Activity.ActivityVector.First(GuardsActivities);
+      StartMinute : Integer;
+      EndMinute : Integer;
+      MinuteCounter: Types.IntegerArray(0..59) := (others => 0);
+   begin
+      while GetNextSleepPeriod(ActivityCursor, ThisSleepPeriod) loop
+         StartMinute := Activity.GetMinute(ThisSleepPeriod.asleep);
+         EndMinute := Activity.GetMinute(ThisSleepPeriod.awake) - 1;
+
+         for I in Integer range StartMinute .. EndMinute loop
+            MinuteCounter(I) := MinuteCounter(I) + 1;
+         end loop;
+      end loop;
+      return MinuteCounter;
+   end GetSleepFrequencyPerMinute;
+
+   function GetMostFrequentMinuteAsleep(GuardsActivities: in Activity.ActivityVector.Vector) return MinuteFrequencyTuple is
+      MinuteAndFrequency: MinuteFrequencyTuple;
+      ArrayMaximum : Types.ArrayLocationTuple;
+   begin
+      ArrayMaximum := Types.Maximum(GetSleepFrequencyPerMinute(GuardsActivities));
+      MinuteAndFrequency.min := ArrayMaximum.loc;
+      MinuteAndFrequency.freq := ArrayMaximum.val;
+      return MinuteAndFrequency;
    end;
 
    procedure Print(a :in ActivityRecord) is

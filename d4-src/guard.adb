@@ -1,3 +1,5 @@
+with Ada.Text_IO;
+with Ada.Integer_Text_IO;
 with Ada.Containers.Hashed_Maps;
 
 with Activity;
@@ -7,11 +9,6 @@ use type Activity.ActivityVector.Vector;
 package body Guard is
    
    use GuardActivityMap;
-
-   function IntegerHash(i: Integer) return Ada.Containers.Hash_Type is
-   begin
-       return Ada.Containers.Hash_Type(i);
-   end IntegerHash;
 
    function ParseGuardActivities(AllActivities: in Activity.ActivityVector.Vector) return GuardActivityMap.Map is
       map: GuardActivityMap.Map;
@@ -56,5 +53,38 @@ package body Guard is
          C := GuardActivityMap.Next(C);
       end loop;
    end PrintActivityMap;
+
+   procedure PrintMinutesAsleep(GuardActivityMap : Guard.GuardActivityMap.Map) is
+      ActivityMapCursor: Guard.GuardActivityMap.Cursor := Guard.GuardActivityMap.First(GuardActivityMap);
+   begin
+      while Guard.GuardActivityMap.Has_Element(ActivityMapCursor) loop
+         Ada.Text_IO.Put("Guard #");
+         Ada.Integer_Text_IO.Put(Guard.GuardActivityMap.Key(ActivityMapCursor), Width => 0);
+         Ada.Text_IO.Put(": ");
+         Ada.Integer_Text_IO.Put(
+            Activity.GetMinutesAsleep(Guard.GuardActivityMap.Element(ActivityMapCursor)),
+            Width => 0
+         );
+         Ada.Text_IO.Put_Line("");
+         Guard.GuardActivityMap.Next(ActivityMapCursor);
+      end loop;
+   end;
+
+   function GetHighestMinutesAsleepGuardID(GuardActivityMap : Guard.GuardActivityMap.Map) return Integer is
+      ActivityMapCursor: Guard.GuardActivityMap.Cursor := Guard.GuardActivityMap.First(GuardActivityMap);
+      ID : Integer := -1;
+      ThisMinutesAsleep : Integer;
+      Maximum : Integer := -1;
+   begin
+      while Guard.GuardActivityMap.Has_Element(ActivityMapCursor) loop
+         ThisMinutesAsleep := Activity.GetMinutesAsleep(Guard.GuardActivityMap.Element(ActivityMapCursor));
+         if Maximum < ThisMinutesAsleep then
+            Maximum := ThisMinutesAsleep;
+            ID := Guard.GuardActivityMap.Key(ActivityMapCursor);
+         end if;
+         Guard.GuardActivityMap.Next(ActivityMapCursor);
+      end loop;
+      return ID;
+   end;
 
 end Guard;

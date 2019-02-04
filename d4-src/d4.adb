@@ -18,68 +18,7 @@ procedure d4 is
    Activities : Activity.ActivityVector.Vector;
    GuardActivityMap : Guard.GuardActivityMap.Map;
    HighestMinutesAsleepGuardID : Integer := 0;
-   MostFrequentMinuteAsleep: Integer := 0;
-
-   procedure PrintMinutesAsleep(GuardActivityMap : Guard.GuardActivityMap.Map) is
-      ActivityMapCursor: Guard.GuardActivityMap.Cursor := Guard.GuardActivityMap.First(GuardActivityMap);
-   begin
-      while Guard.GuardActivityMap.Has_Element(ActivityMapCursor) loop
-         Ada.Text_IO.Put("Guard #");
-         Ada.Integer_Text_IO.Put(Guard.GuardActivityMap.Key(ActivityMapCursor), Width => 0);
-         Ada.Text_IO.Put(": ");
-         Ada.Integer_Text_IO.Put(
-            Activity.GetMinutesAsleep(Guard.GuardActivityMap.Element(ActivityMapCursor)),
-            Width => 0
-         );
-         Ada.Text_IO.Put_Line("");
-         Guard.GuardActivityMap.Next(ActivityMapCursor);
-      end loop;
-   end;
-
-   function GetHighestMinutesAsleepGuardID(GuardActivityMap : Guard.GuardActivityMap.Map) return Integer is
-      ActivityMapCursor: Guard.GuardActivityMap.Cursor := Guard.GuardActivityMap.First(GuardActivityMap);
-      ID : Integer := -1;
-      ThisMinutesAsleep : Integer;
-      Maximum : Integer := -1;
-   begin
-      while Guard.GuardActivityMap.Has_Element(ActivityMapCursor) loop
-         ThisMinutesAsleep := Activity.GetMinutesAsleep(Guard.GuardActivityMap.Element(ActivityMapCursor));
-         if Maximum < ThisMinutesAsleep then
-            Maximum := ThisMinutesAsleep;
-            ID := Guard.GuardActivityMap.Key(ActivityMapCursor);
-         end if;
-         Guard.GuardActivityMap.Next(ActivityMapCursor);
-      end loop;
-      return ID;
-   end;
-
-   function GetMostFrequentMinuteAsleep(GuardsActivities: Activity.ActivityVector.Vector) return Integer is
-      AwakeActivity: Activity.ActivityRecord;
-      AsleepActivity: Activity.ActivityRecord;
-      ActivityCursor: Activity.ActivityVector.Cursor := Activity.ActivityVector.First(GuardsActivities);
-      StartMinute : Integer;
-      EndMinute : Integer;
-      MinuteCounter: Types.IntegerArray(0..59) := (others => 0);
-   begin
-      Activity.ActivityVector.Next(ActivityCursor);
-      while Activity.ActivityVector.Has_Element(ActivityCursor) loop
-         AsleepActivity := Activity.ActivityVector.Element(ActivityCursor);
-         Activity.ActivityVector.Next(ActivityCursor);
-         if not Activity.ActivityVector.Has_Element(ActivityCursor) then
-            exit;
-         end if;
-         AwakeActivity := Activity.ActivityVector.Element(ActivityCursor);
-         Activity.ActivityVector.Next(ActivityCursor);
-
-         StartMinute := Activity.GetMinute(AsleepActivity);
-         EndMinute := Activity.GetMinute(AwakeActivity) - 1;
-
-         for I in Integer range StartMinute .. EndMinute loop
-            MinuteCounter(I) := MinuteCounter(I) + 1;
-         end loop;
-      end loop;
-      return Types.MaximumIndex(MinuteCounter);
-   end;
+   MostFrequentMinuteAsleep: Activity.MinuteFrequencyTuple;
    
 begin
    for I in StdinArr'Range loop
@@ -89,26 +28,21 @@ begin
 
    Activity.Sorter.Sort(Container => Activities);
 
-   -- for I in StdinArr'Range loop
-   --    Activity.Print(Activities(I));
-   -- end loop;
-
    GuardActivityMap := Guard.ParseGuardActivities(Activities);
-   -- Guard.PrintActivityMap(GuardActivityMap);
 
-   PrintMinutesAsleep(GuardActivityMap);
+   Guard.PrintMinutesAsleep(GuardActivityMap);
 
-   HighestMinutesAsleepGuardID := GetHighestMinutesAsleepGuardID(GuardActivityMap);
+   HighestMinutesAsleepGuardID := Guard.GetHighestMinutesAsleepGuardID(GuardActivityMap);
 
    Ada.Integer_Text_IO.Put(HighestMinutesAsleepGuardID, width => 0);
    Ada.Text_IO.Put_Line("");
 
-   MostFrequentMinuteAsleep := GetMostFrequentMinuteAsleep(GuardActivityMap(HighestMinutesAsleepGuardID));
+   MostFrequentMinuteAsleep := Activity.GetMostFrequentMinuteAsleep(GuardActivityMap(HighestMinutesAsleepGuardID));
 
-   Ada.Integer_Text_IO.Put(MostFrequentMinuteAsleep, width => 0);
+   Ada.Integer_Text_IO.Put(MostFrequentMinuteAsleep.min, width => 0);
    Ada.Text_IO.Put_Line("");
 
-   Ada.Integer_Text_IO.Put(MostFrequentMinuteAsleep * HighestMinutesAsleepGuardID, width => 0);
+   Ada.Integer_Text_IO.Put(MostFrequentMinuteAsleep.min * HighestMinutesAsleepGuardID, width => 0);
    Ada.Text_IO.Put_Line("");
 
 end;

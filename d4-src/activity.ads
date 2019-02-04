@@ -2,6 +2,8 @@ with Ada.Calendar;
 with Ada.Strings.Unbounded;
 with Ada.Containers.Vectors;
 
+with Types;
+
 package Activity is
 
    package UStr renames Ada.Strings.Unbounded;
@@ -12,14 +14,28 @@ package Activity is
       str: UStr.Unbounded_String;
    end record;
 
+   type SleepPeriod is
+   record 
+      asleep: ActivityRecord;
+      awake: ActivityRecord;
+   end record;
+
    package ActivityVector is new Ada.Containers.Vectors
       (Element_Type => ActivityRecord,
       Index_Type => Natural);
 
+   type MinuteFrequencyTuple is
+   record
+      min: Integer;
+      freq: Integer;
+   end record;
+      
    function From_String(s: in UStr.Unbounded_String) return ActivityRecord;
    function IsChangeOfGuard(a: in ActivityRecord) return Boolean;
    function GetGuardID(a: in ActivityRecord) return Integer;
    function GetMinutesAsleep(activities: in ActivityVector.Vector) return Integer;
+   function GetSleepFrequencyPerMinute(GuardsActivities: in Activity.ActivityVector.Vector) return Types.IntegerArray;
+   function GetMostFrequentMinuteAsleep(GuardsActivities: Activity.ActivityVector.Vector) return MinuteFrequencyTuple;
 
    function GetMinute(a: in ActivityRecord) return Integer;
    
