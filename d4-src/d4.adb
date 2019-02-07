@@ -30,7 +30,8 @@ begin
 
    GuardActivityMap := Guard.ParseGuardActivities(Activities);
 
-   Guard.PrintMinutesAsleep(GuardActivityMap);
+   --Guard.PrintActivityMap(GuardActivityMap);
+   --Guard.PrintMinutesAsleep(GuardActivityMap);
 
    HighestMinutesAsleepGuardID := Guard.GetHighestMinutesAsleepGuardID(GuardActivityMap);
 

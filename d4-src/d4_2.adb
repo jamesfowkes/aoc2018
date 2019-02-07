@@ -33,13 +33,12 @@ begin
 
    GuardActivityCursor := Guard.GuardActivityMap.First(GuardActivityMap);
 
-   while Guard.GuardActivityMap.Has_Element(GuardActivityCursor) loop
-      MinuteAndFrequency := Activity.GetMostFrequentMinuteAsleep(Guard.GuardActivityMap.Element(GuardActivityCursor));
+   for C in GuardActivityMap.Iterate loop
+      MinuteAndFrequency := Activity.GetMostFrequentMinuteAsleep(Guard.GuardActivityMap.Element(C));
       if MinuteAndFrequency.freq > MinuteAndFrequencyMostAsleep.freq then
          MinuteAndFrequencyMostAsleep := MinuteAndFrequency;
-         GuardMostAsleep := Guard.GuardActivityMap.Key(GuardActivityCursor);
+         GuardMostAsleep := Guard.GuardActivityMap.Key(C);
       end if;
-      Guard.GuardActivityMap.Next(GuardActivityCursor);
    end loop;
 
    Ada.Integer_Text_IO.Put(MinuteAndFrequencyMostAsleep.min, width => 0);

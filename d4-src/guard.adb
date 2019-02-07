@@ -55,34 +55,30 @@ package body Guard is
    end PrintActivityMap;
 
    procedure PrintMinutesAsleep(GuardActivityMap : Guard.GuardActivityMap.Map) is
-      ActivityMapCursor: Guard.GuardActivityMap.Cursor := Guard.GuardActivityMap.First(GuardActivityMap);
    begin
-      while Guard.GuardActivityMap.Has_Element(ActivityMapCursor) loop
+      for C in GuardActivityMap.Iterate loop
          Ada.Text_IO.Put("Guard #");
-         Ada.Integer_Text_IO.Put(Guard.GuardActivityMap.Key(ActivityMapCursor), Width => 0);
+         Ada.Integer_Text_IO.Put(Guard.GuardActivityMap.Key(C), Width => 0);
          Ada.Text_IO.Put(": ");
          Ada.Integer_Text_IO.Put(
-            Activity.GetMinutesAsleep(Guard.GuardActivityMap.Element(ActivityMapCursor)),
+            Activity.GetMinutesAsleep(Guard.GuardActivityMap.Element(C)),
             Width => 0
          );
          Ada.Text_IO.Put_Line("");
-         Guard.GuardActivityMap.Next(ActivityMapCursor);
       end loop;
    end;
 
    function GetHighestMinutesAsleepGuardID(GuardActivityMap : Guard.GuardActivityMap.Map) return Integer is
-      ActivityMapCursor: Guard.GuardActivityMap.Cursor := Guard.GuardActivityMap.First(GuardActivityMap);
       ID : Integer := -1;
       ThisMinutesAsleep : Integer;
       Maximum : Integer := -1;
    begin
-      while Guard.GuardActivityMap.Has_Element(ActivityMapCursor) loop
-         ThisMinutesAsleep := Activity.GetMinutesAsleep(Guard.GuardActivityMap.Element(ActivityMapCursor));
+      for C in GuardActivityMap.Iterate loop
+         ThisMinutesAsleep := Activity.GetMinutesAsleep(Guard.GuardActivityMap.Element(C));
          if Maximum < ThisMinutesAsleep then
             Maximum := ThisMinutesAsleep;
-            ID := Guard.GuardActivityMap.Key(ActivityMapCursor);
+            ID := Guard.GuardActivityMap.Key(C);
          end if;
-         Guard.GuardActivityMap.Next(ActivityMapCursor);
       end loop;
       return ID;
    end;
