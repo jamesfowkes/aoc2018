@@ -34,7 +34,7 @@ package body Claim is
       ThisClaim.cstart.x := Integer'Value(UStr.Slice(s, XIndex, YIndex-2));
       ThisClaim.cstart.y := Integer'Value(UStr.Slice(s, YIndex, WIndex-3));
       ThisClaim.cend.x := ThisClaim.cstart.x + Integer'Value(UStr.Slice(s, WIndex, HIndex-2)) - 1;
-      ThisClaim.cend.y := ThisClaim.cstart.y + Integer'Value(UStr.Slice(s, HIndex, Ustr.Length(s))) - 1;
+      ThisClaim.cend.y := ThisClaim.cstart.y + Integer'Value(UStr.Slice(s, HIndex, UStr.Length(s))) - 1;
       return ThisClaim;
    end From_String;
 
