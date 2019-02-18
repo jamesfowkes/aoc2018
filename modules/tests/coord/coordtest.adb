@@ -44,14 +44,19 @@ package body CoordTest is
       TestCoordinate2 : Coord.Coordinate := (x => 0, y => 0);
    begin
       Assert (Coord.Manhattan (TestCoordinate1, TestCoordinate2) = 0, "Distance between equal coordinates should equal 0");
+      Assert (Coord.Manhattan (TestCoordinate2, TestCoordinate1) = 0, "Distance between equal coordinates should equal 0");
       TestCoordinate1.x := 1;
       Assert (Coord.Manhattan (TestCoordinate1, TestCoordinate2) = 1, "Distance between coordinates should equal 1");
+      Assert (Coord.Manhattan (TestCoordinate2, TestCoordinate1) = 1, "Distance between coordinates should equal 1");
       TestCoordinate1.y := 1;
       Assert (Coord.Manhattan (TestCoordinate1, TestCoordinate2) = 2, "Distance between coordinates should equal 2");
+      Assert (Coord.Manhattan (TestCoordinate2, TestCoordinate1) = 2, "Distance between coordinates should equal 2");
       TestCoordinate2.x := -1;
       Assert (Coord.Manhattan (TestCoordinate1, TestCoordinate2) = 3, "Distance between coordinates should equal 3");
+      Assert (Coord.Manhattan (TestCoordinate2, TestCoordinate1) = 3, "Distance between coordinates should equal 3");
       TestCoordinate2.y := -1;
       Assert (Coord.Manhattan (TestCoordinate1, TestCoordinate2) = 4, "Distance between coordinates should equal 4");
+      Assert (Coord.Manhattan (TestCoordinate2, TestCoordinate1) = 4, "Distance between coordinates should equal 4");
    end CoordManhattanDistance;
 
    procedure Register_Tests (T : in out Test_Case) is
