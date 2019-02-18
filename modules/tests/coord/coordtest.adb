@@ -71,13 +71,29 @@ package body CoordTest is
       
    end CoordEqualComparisons;
 
+   procedure CoordDiffComparisons (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      TestCoordinate1 : Coord.Coordinate := (x => 0, y => 0);
+      TestCoordinate2 : Coord.Coordinate := (x => 1, y => 1);
+   begin
+      Assert (Coord.Under (TestCoordinate1, TestCoordinate2), "C1 should be under C2");
+      Assert (Coord.Over (TestCoordinate2, TestCoordinate1), "C2 should be under C1");
+      Assert (Coord.LeftOf (TestCoordinate1, TestCoordinate2), "C1 should be left of C2");
+      Assert (Coord.RightOf (TestCoordinate2, TestCoordinate1), "C2 should be right of C1");
+
+      Assert (not Coord.Under (TestCoordinate1, TestCoordinate1), "Same coordinate should always compare false");
+      Assert (not Coord.Over (TestCoordinate1, TestCoordinate1), "Same coordinate should always compare false");
+      Assert (not Coord.LeftOf (TestCoordinate1, TestCoordinate1), "Same coordinate should always compare false");
+      Assert (not Coord.RightOf (TestCoordinate1, TestCoordinate1), "Same coordinate should always compare false");
+   end CoordDiffComparisons;
+
    procedure Register_Tests (T : in out Test_Case) is
       use Test_Cases, Test_Cases.Registration;
    begin
       Register_Routine (T, CoordCreationFromString'Access, "Creation of a coordinate from a string");
       Register_Routine (T, CoordToString'Access, "Creation of a string from a coordinate");
       Register_Routine (T, CoordManhattanDistance'Access, "Calculation of Manhattan distance between two coords");
-      Register_Routine (T, CoordEqualComparisons'Access, "Comparisons between equal coordinates");
+      Register_Routine (T, CoordEqualComparisons'Access, "Eqaulity comparison between coordinates");
+      Register_Routine (T, CoordDiffComparisons'Access, "Comparisons between coordinates");
    end Register_Tests;
 
    function Name (T : Test_Case) return Message_String is

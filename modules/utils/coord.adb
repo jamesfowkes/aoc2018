@@ -37,4 +37,20 @@ package body Coord is
       return abs (c1.x - c2.x) + abs (c1.y - c2.y);
    end Manhattan;
 
+   function Under (c1 : in Coordinate; c2 : in Coordinate) return Boolean is
+   begin return c1.y < c2.y;
+   end Under;
+
+   function Over (c1 : in Coordinate; c2 : in Coordinate) return Boolean is
+   begin return c1.y > c2.y;
+   end Over;
+
+   function LeftOf (c1 : in Coordinate; c2 : in Coordinate) return Boolean is
+   begin return c1.x < c2.x;
+   end LeftOf;
+
+   function RightOf (c1 : in Coordinate; c2 : in Coordinate) return Boolean is
+   begin return c1.x > c2.x;
+   end RightOf;
+
 end Coord;
