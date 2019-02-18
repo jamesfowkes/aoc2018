@@ -5,7 +5,9 @@ package body Coord is
 
    function To_String (c : in Coordinate) return String is
    begin
-      return Integer'Image (c.x) & "," & Integer'Image (c.y);
+      return Ada.Strings.Fixed.Trim (Integer'Image (c.x), Ada.Strings.Left) &
+         "," &
+         Ada.Strings.Fixed.Trim (Integer'Image (c.y), Ada.Strings.Left);
    end To_String;
 
    function Hash (c : in Coordinate) return Ada.Containers.Hash_Type is
@@ -27,5 +29,12 @@ package body Coord is
       NewCoord.y := Integer'Value (s (CommaIndex + 1 .. s'Last));
       return NewCoord;
    end From_String;
+
+   function Manhattan (
+      c1 : in Coordinate;
+      c2 : in Coordinate) return Integer is
+   begin
+      return abs (c1.x - c2.x) + abs (c1.y - c2.y);
+   end Manhattan;
 
 end Coord;
