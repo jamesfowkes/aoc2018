@@ -2,7 +2,7 @@ with AUnit.Assertions; use AUnit.Assertions;
 with Ada.Containers; use Ada.Containers;
 with Ada.Strings.Unbounded;
 
-with Coord;
+with Coord; use Coord;
 
 package body CoordTest is
 
@@ -59,12 +59,25 @@ package body CoordTest is
       Assert (Coord.Manhattan (TestCoordinate2, TestCoordinate1) = 4, "Distance between coordinates should equal 4");
    end CoordManhattanDistance;
 
+   procedure CoordEqualComparisons (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      TestCoordinate1 : Coord.Coordinate := (x => 0, y => 0);
+      TestCoordinate2 : Coord.Coordinate := (x => 0, y => 0);
+   begin
+      Assert (TestCoordinate1 = TestCoordinate2, "Coordinates should be equal");
+      Assert (TestCoordinate2 = TestCoordinate1, "Coordinates should be equal");
+      TestCoordinate1.x := 1;
+      Assert (TestCoordinate1 /= TestCoordinate2, "Coordinates should be equal");
+      Assert (TestCoordinate2 /= TestCoordinate1, "Coordinates should be equal");
+      
+   end CoordEqualComparisons;
+
    procedure Register_Tests (T : in out Test_Case) is
       use Test_Cases, Test_Cases.Registration;
    begin
       Register_Routine (T, CoordCreationFromString'Access, "Creation of a coordinate from a string");
       Register_Routine (T, CoordToString'Access, "Creation of a string from a coordinate");
       Register_Routine (T, CoordManhattanDistance'Access, "Calculation of Manhattan distance between two coords");
+      Register_Routine (T, CoordEqualComparisons'Access, "Comparisons between equal coordinates");
    end Register_Tests;
 
    function Name (T : Test_Case) return Message_String is
