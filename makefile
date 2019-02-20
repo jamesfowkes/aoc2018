@@ -4,19 +4,21 @@ else
     EXT=
 endif
 
+SWITCHES = -gnat12
+
 INCLUDES = -I. \
 	-Imodules/binarytree \
 	-Imodules/stack \
 	-Imodules/utils
 
 %$(EXT):
-	gnatmake $(INCLUDES) $*-src/$*
+	gnatmake $(SWITCHES) $(INCLUDES) $*-src/$*
 	mv $* $*-src
 	mv $*.* $*-src
 	cat $*-src/$*.txt | dos2unix | ./$*-src/$*$(EXT)
 
 %_2$(EXT):
-	gnatmake $(INCLUDES) $*-src/$*_2
+	gnatmake $(SWITCHES) $(INCLUDES) $*-src/$*_2
 	mv $*_2 $*-src
 	mv $*_2.* $*-src
 	cat $*-src/$*.txt | dos2unix | ./$*-src/$*_2$(EXT)
