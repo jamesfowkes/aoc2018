@@ -2,7 +2,7 @@ package body Types is
 
    function IntegerHash (i : Integer) return Ada.Containers.Hash_Type is
    begin
-      return Ada.Containers.Hash_Type (i);
+      return Ada.Containers.Hash_Type'Mod (i);
    end IntegerHash;
 
    function Maximum (arr : in IntegerArray) return ArrayLocationTuple is

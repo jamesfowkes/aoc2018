@@ -1,34 +1,34 @@
 with Ada.Text_IO;
-with Ada.Text_IO.Unbounded_IO;
 with Ada.Integer_Text_IO;
-with Ada.Strings.Unbounded;
-with Ada.Containers.Vectors;
+with Ada.Containers.Hashed_Sets;
 
 with get_stdin;
-with utils;
-with binarytree;
 with Types;
 
 procedure d1_2 is
 
-    stdin_arr : Types.IntegerArray := get_stdin.get_ints;
-    frequency: Integer := 0;
-    frequencies: binarytree.binarytree_root;
+   package FrequencySet is new Ada.Containers.Hashed_Sets
+      (Element_Type => Integer,
+      Hash => Types.IntegerHash,
+      Equivalent_Elements => "=");
+
+   stdin_arr : constant Types.IntegerArray := get_stdin.get_ints;
+   frequency : Integer := 0;
+   frequencies : FrequencySet.Set;
 begin
-    binarytree.init (frequencies, False);
-    Outer_Loop:
-    loop
-        for I in stdin_arr'Range loop
-            frequency := frequency + stdin_arr(I);
+   Outer_Loop :
+   loop
+      for I in stdin_arr'Range loop
+         frequency := frequency + stdin_arr (I);
 
-            if binarytree.has(frequencies, frequency) then
-                exit Outer_Loop;
-            else
-                binarytree.insert(frequencies, frequency);
-            end if;
+         if FrequencySet.Contains (frequencies, frequency) then
+            exit Outer_Loop;
+         else
+            FrequencySet.Insert (frequencies, frequency);
+         end if;
 
-        end loop;
-    end loop Outer_Loop;
+      end loop;
+   end loop Outer_Loop;
 
-    Ada.Integer_Text_IO.Put(frequency, Width => 0); Ada.Text_IO.Put_Line("");
-end;
+   Ada.Integer_Text_IO.Put (frequency, Width => 0); Ada.Text_IO.Put_Line ("");
+end d1_2;
