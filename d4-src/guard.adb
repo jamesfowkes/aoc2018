@@ -5,9 +5,7 @@ package body Guard is
 
    use GuardActivityMap;
 
-   function ParseGuardActivities (
-      all_activities : in Activity.ActivityVector.Vector)
-      return GuardActivityMap.Map is
+   function ParseGuardActivities (all_activities : in Activity.ActivityVector.Vector) return GuardActivityMap.Map is
 
       map : GuardActivityMap.Map;
       current_guard_ID : Integer := -1;
@@ -18,11 +16,9 @@ package body Guard is
          if Activity.IsChangeOfGuard (all_activities (I)) then
             if current_guard_ID /= -1 then
                if not map.Contains (current_guard_ID) then
-                  map.Insert (
-                     current_guard_ID, New_Item => current_activities);
+                  map.Insert (current_guard_ID, New_Item => current_activities);
                else
-                  map.Replace (
-                     current_guard_ID, New_Item => current_activities);
+                  map.Replace (current_guard_ID, New_Item => current_activities);
                end if;
                Activity.ActivityVector.Clear (current_activities);
                current_activities.Append (all_activities (I));
@@ -49,8 +45,7 @@ package body Guard is
       end loop;
    end PrintActivityMap;
 
-   procedure PrintMinutesAsleep (
-      guard_activity_map : Guard.GuardActivityMap.Map) is
+   procedure PrintMinutesAsleep (guard_activity_map : Guard.GuardActivityMap.Map) is
 
    begin
       for C in guard_activity_map.Iterate loop
@@ -65,22 +60,21 @@ package body Guard is
       end loop;
    end PrintMinutesAsleep;
 
-   function GetHighestMinutesAsleepGuardID (
-      guard_activity_map : Guard.GuardActivityMap.Map) return Integer is
+   function GetHighestMinutesAsleepGuardID (guard_activity_map : Guard.GuardActivityMap.Map) return Integer is
 
-      ID : Integer := -1;
-      ThisMinutesAsleep : Integer;
-      Maximum : Integer := -1;
+      guard_id : Integer := -1;
+      this_minutes_asleep : Integer;
+      maximum : Integer := -1;
    begin
       for C in guard_activity_map.Iterate loop
-         ThisMinutesAsleep := Activity.GetMinutesAsleep (
+         this_minutes_asleep := Activity.GetMinutesAsleep (
             Guard.GuardActivityMap.Element (C));
-         if Maximum < ThisMinutesAsleep then
-            Maximum := ThisMinutesAsleep;
-            ID := Guard.GuardActivityMap.Key (C);
+         if maximum < this_minutes_asleep then
+            maximum := this_minutes_asleep;
+            guard_id := Guard.GuardActivityMap.Key (C);
          end if;
       end loop;
-      return ID;
+      return guard_id;
    end GetHighestMinutesAsleepGuardID;
 
 end Guard;

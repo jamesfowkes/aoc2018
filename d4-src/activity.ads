@@ -34,19 +34,15 @@ package Activity is
    function IsChangeOfGuard (a : in ActivityRecord) return Boolean;
    function GetGuardID (a : in ActivityRecord) return Integer;
 
-   function GetMinutesAsleep (
-      activities : in ActivityVector.Vector) return Integer;
-   function GetSleepFrequencyPerMinute (
-      GuardsActivities : in Activity.ActivityVector.Vector)
+   function GetMinutesAsleep (activities : in ActivityVector.Vector) return Integer;
+   function GetSleepFrequencyPerMinute (GuardsActivities : in Activity.ActivityVector.Vector)
    return Types.IntegerArray;
 
-   function GetMostFrequentMinuteAsleep (
-      GuardsActivities : Activity.ActivityVector.Vector)
+   function GetMostFrequentMinuteAsleep (GuardsActivities : Activity.ActivityVector.Vector)
    return MinuteFrequencyTuple;
 
    function GetNextSleepPeriod (
-      ActivityCursor : in out ActivityVector.Cursor;
-      ThisSleepPeriod : out SleepPeriod) return Boolean;
+      ActivityCursor : in out ActivityVector.Cursor; ThisSleepPeriod : out SleepPeriod) return Boolean;
 
    function GetMinute (a : in ActivityRecord) return Integer;
 

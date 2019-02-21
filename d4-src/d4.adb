@@ -40,9 +40,7 @@ begin
    Ada.Integer_Text_IO.Put (most_frequency_minute_asleep.min, Width => 0);
    Ada.Text_IO.Put_Line ("");
 
-   Ada.Integer_Text_IO.Put (
-      most_frequency_minute_asleep.min * highest_minutes_asleep_guard_ID,
-      Width => 0);
+   Ada.Integer_Text_IO.Put (most_frequency_minute_asleep.min * highest_minutes_asleep_guard_ID, Width => 0);
    Ada.Text_IO.Put_Line ("");
 
 end d4;

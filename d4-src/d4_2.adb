@@ -14,8 +14,7 @@ procedure d4_2 is
    guard_activity_map : Guard.GuardActivityMap.Map;
    MinuteAndFrequency : Activity.MinuteFrequencyTuple;
 
-   MinuteAndFrequencyMostAsleep :
-      Activity.MinuteFrequencyTuple := (min => 0, freq => -1);
+   MinuteAndFrequencyMostAsleep : Activity.MinuteFrequencyTuple := (min => 0, freq => -1);
 
    GuardMostAsleep : Integer;
 begin
@@ -32,8 +31,7 @@ begin
 
    for C in guard_activity_map.Iterate loop
 
-      MinuteAndFrequency := Activity.GetMostFrequentMinuteAsleep (
-         Guard.GuardActivityMap.Element (C));
+      MinuteAndFrequency := Activity.GetMostFrequentMinuteAsleep (Guard.GuardActivityMap.Element (C));
 
       if MinuteAndFrequency.freq > MinuteAndFrequencyMostAsleep.freq then
          MinuteAndFrequencyMostAsleep := MinuteAndFrequency;
@@ -47,8 +45,7 @@ begin
    Ada.Integer_Text_IO.Put (GuardMostAsleep, Width => 0);
    Ada.Text_IO.Put_Line ("");
 
-   Ada.Integer_Text_IO.Put (
-      MinuteAndFrequencyMostAsleep.min * GuardMostAsleep, Width => 0);
+   Ada.Integer_Text_IO.Put (MinuteAndFrequencyMostAsleep.min * GuardMostAsleep, Width => 0);
    Ada.Text_IO.Put_Line ("");
 
 end d4_2;

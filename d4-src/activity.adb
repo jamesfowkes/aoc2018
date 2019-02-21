@@ -49,8 +49,7 @@ package body Activity is
    end GetGuardID;
 
    function GetNextSleepPeriod (
-      ActivityCursor : in out ActivityVector.Cursor;
-      ThisSleepPeriod : out SleepPeriod) return Boolean is
+      ActivityCursor : in out ActivityVector.Cursor; ThisSleepPeriod : out SleepPeriod) return Boolean is
 
       AwakeActivity : ActivityRecord;
       AsleepActivity : ActivityRecord;
@@ -69,8 +68,7 @@ package body Activity is
       return False;
    end GetNextSleepPeriod;
 
-   function GetMinutesAsleep (
-      activities : in ActivityVector.Vector) return Integer is
+   function GetMinutesAsleep (activities : in ActivityVector.Vector) return Integer is
 
       ThisSleepPeriod : SleepPeriod;
       MinutesAsleep : Integer := 0;
@@ -96,13 +94,11 @@ package body Activity is
       return Integer (Ada.Calendar.Seconds (a.dt) / 60);
    end GetMinute;
 
-   function GetSleepFrequencyPerMinute (
-      GuardsActivities : in Activity.ActivityVector.Vector
+   function GetSleepFrequencyPerMinute (GuardsActivities : in Activity.ActivityVector.Vector
    ) return Types.IntegerArray is
       ThisSleepPeriod : SleepPeriod;
 
-      ActivityCursor : Activity.ActivityVector.Cursor :=
-         Activity.ActivityVector.First (GuardsActivities);
+      ActivityCursor : Activity.ActivityVector.Cursor := Activity.ActivityVector.First (GuardsActivities);
 
       StartMinute : Integer;
       EndMinute : Integer;
@@ -119,15 +115,13 @@ package body Activity is
       return MinuteCounter;
    end GetSleepFrequencyPerMinute;
 
-   function GetMostFrequentMinuteAsleep (
-      GuardsActivities : in Activity.ActivityVector.Vector)
+   function GetMostFrequentMinuteAsleep (GuardsActivities : in Activity.ActivityVector.Vector)
       return MinuteFrequencyTuple is
 
       MinuteAndFrequency : MinuteFrequencyTuple;
       ArrayMaximum : Types.ArrayLocationTuple;
    begin
-      ArrayMaximum := Types.Maximum (
-         GetSleepFrequencyPerMinute (GuardsActivities));
+      ArrayMaximum := Types.Maximum (GetSleepFrequencyPerMinute (GuardsActivities));
 
       MinuteAndFrequency.min := ArrayMaximum.loc;
       MinuteAndFrequency.freq := ArrayMaximum.val;

@@ -16,17 +16,12 @@ package Guard is
 
    package GuardDurationMap renames Types.IntegerMap;
 
-   function ParseGuardActivities (
-      all_activities : in Activity.ActivityVector.Vector)
-      return GuardActivityMap.Map;
+   function ParseGuardActivities (all_activities : in Activity.ActivityVector.Vector) return GuardActivityMap.Map;
 
-   function GetHighestMinutesAsleepGuardID (
-      guard_activity_map : Guard.GuardActivityMap.Map) return Integer;
+   function GetHighestMinutesAsleepGuardID (guard_activity_map : Guard.GuardActivityMap.Map) return Integer;
 
-   procedure PrintActivityMap (
-      guard_activity_map : in GuardActivityMap.Map);
+   procedure PrintActivityMap (guard_activity_map : in GuardActivityMap.Map);
 
-   procedure PrintMinutesAsleep (
-      guard_activity_map : Guard.GuardActivityMap.Map);
+   procedure PrintMinutesAsleep (guard_activity_map : Guard.GuardActivityMap.Map);
 
 end Guard;
