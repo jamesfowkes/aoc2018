@@ -4,7 +4,7 @@ else
     EXT=
 endif
 
-SWITCHES = -gnat12
+SWITCHES = -gnat12 -gnatf -gnatQ -gnatwa -gnatyy -gnatwe
 
 INCLUDES = -I. \
 	-Imodules/binarytree \

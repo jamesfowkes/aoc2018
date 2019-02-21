@@ -1,16 +1,15 @@
 with Ada.Text_IO;
-with Ada.Text_IO.Unbounded_IO;
 with Ada.Integer_Text_IO;
-with Ada.Strings.Unbounded;
 
 with get_stdin;
 with Types;
+
 procedure d1 is
-    StdinArr : Types.IntegerArray := get_stdin.get_ints;
-    Frequency: Integer :=0 ;
+   stdin_arr : constant Types.IntegerArray := get_stdin.get_ints;
+   frequency : Integer := 0;
 begin
-    for I in StdinArr'Range loop
-        Frequency := Frequency + StdinArr(I);
-    end loop;
-    Ada.Integer_Text_IO.Put(Frequency, Width => 0); Ada.Text_IO.Put_Line("");
-end;
+   for I in stdin_arr'Range loop
+      frequency := frequency + stdin_arr (I);
+   end loop;
+   Ada.Integer_Text_IO.Put (frequency, Width => 0); Ada.Text_IO.Put_Line ("");
+end d1;
