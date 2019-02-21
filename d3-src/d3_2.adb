@@ -4,28 +4,28 @@ with get_stdin;
 
 procedure d3_2 is
    stdin_arr : constant Types.StringArray := get_stdin.get_strs;
-   Claims : Claim.ClaimVector.Vector;
-   Overlap : Boolean := False;
+   claims : Claim.ClaimVector.Vector;
+   overlap : Boolean := False;
 begin
    for I in stdin_arr'Range loop
-      Claims.Append (Claim.From_String (stdin_arr (I)));
+      claims.Append (Claim.FromString (stdin_arr (I)));
    end loop;
 
    Outer_Loop :
-   for I in Claims.First_Index .. Claims.Last_Index loop
-      Overlap := False;
+   for I in claims.First_Index .. claims.Last_Index loop
+      overlap := False;
       Inner_Loop :
-      for J in Claims.First_Index .. Claims.Last_Index loop
+      for J in claims.First_Index .. claims.Last_Index loop
          if I /= J then
-            if Claim.ClaimsOverlap (Claims (I), Claims (J)) then
-               Overlap := True;
+            if Claim.claimsoverlap (claims (I), claims (J)) then
+               overlap := True;
                exit Inner_Loop;
             end if;
          end if;
       end loop Inner_Loop;
 
-      if not Overlap then
-         Claim.Print (Claims (I));
+      if not overlap then
+         Claim.Print (claims (I));
          exit Outer_Loop;
       end if;
    end loop Outer_Loop;

@@ -17,12 +17,9 @@ package Claim is
       (Element_Type => Claim.ClaimRecord,
       Index_Type => Natural);
 
-   function ClaimsOverlap (
-      c1 : in ClaimRecord; c2 : in ClaimRecord) return Boolean;
-   function From_String (
-      s : in UStr.Unbounded_String) return ClaimRecord;
-   function Translate (
-      c : in ClaimRecord; x : in Integer; y : in Integer) return ClaimRecord;
+   function ClaimsOverlap (c1 : in ClaimRecord; c2 : in ClaimRecord) return Boolean;
+   function FromString (s : in UStr.Unbounded_String) return ClaimRecord;
+   function Translate (c : in ClaimRecord; x : in Integer; y : in Integer) return ClaimRecord;
 
    procedure Print (c : in ClaimRecord);
 
