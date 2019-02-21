@@ -11,6 +11,10 @@ INCLUDES = -I. \
 	-Imodules/stack \
 	-Imodules/utils
 
+ALL_TEST_FOLDERS = $(sort $(wildcard d*-src))
+ALL_TESTS = $(subst -src, , $(ALL_TEST_FOLDERS))
+ALL_TESTS := $(foreach TEST,$(ALL_TESTS),$(TEST)$(EXT))
+
 %$(EXT):
 	gnatmake $(SWITCHES) $(INCLUDES) $*-src/$*
 	mv $* $*-src
@@ -30,3 +34,5 @@ INCLUDES = -I. \
 clean:
 	rm *.o
 	rm *.ali
+
+all: $(ALL_TESTS)

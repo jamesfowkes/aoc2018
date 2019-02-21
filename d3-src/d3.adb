@@ -16,7 +16,7 @@ procedure d3 is
 
    stdin_arr : constant Types.StringArray := get_stdin.get_strs;
    claims : Claim.ClaimVector.Vector;
-   fabric : fabricMap.Map;
+   fabric : FabricMap.Map;
    Count : Integer := 0;
    this_coord : Coord.Coordinate := (x => 0, y => 0);
 begin

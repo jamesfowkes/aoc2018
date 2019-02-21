@@ -9,15 +9,15 @@ procedure d6 is
 
    package UStr renames Ada.Strings.Unbounded;
 
-   StdinArr : Types.StringArray := get_stdin.get_strs;
-   Coords : Coord.CoordVector.Vector;
+   stdin_arr : constant Types.StringArray := get_stdin.get_strs;
+   coords : Coord.CoordVector.Vector;
 begin
-   for I in StdinArr'Range loop
-      Coords.Append(Coord.From_String(UStr.To_String(StdinArr(I))));
+   for I in stdin_arr'Range loop
+      coords.Append (Coord.From_String (UStr.To_String (stdin_arr (I))));
    end loop;
 
-   for C: Coord.Coordinate of Coords loop
-      Ada.Text_IO.Put_Line(Coord.To_String(C));
+   for C : Coord.Coordinate of coords loop
+      Ada.Text_IO.Put_Line (Coord.To_String (C));
    end loop;
 
-end;
+end d6;

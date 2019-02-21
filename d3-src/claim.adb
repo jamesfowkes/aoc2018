@@ -40,7 +40,7 @@ package body Claim is
       this_claim.cend.y := this_claim.cstart.y + Integer'Value (UStr.Slice (s, h_index, UStr.Length (s))) - 1;
 
       return this_claim;
-   end From_String;
+   end FromString;
 
    procedure Print (c : in ClaimRecord) is
    begin
