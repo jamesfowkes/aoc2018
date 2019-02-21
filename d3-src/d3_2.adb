@@ -17,7 +17,7 @@ begin
       Inner_Loop :
       for J in claims.First_Index .. claims.Last_Index loop
          if I /= J then
-            if Claim.claimsoverlap (claims (I), claims (J)) then
+            if Claim.ClaimsOverlap (claims (I), claims (J)) then
                overlap := True;
                exit Inner_Loop;
             end if;

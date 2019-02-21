@@ -13,7 +13,8 @@ INCLUDES = -I. \
 
 ALL_TEST_FOLDERS = $(sort $(wildcard d*-src))
 ALL_TESTS = $(subst -src, , $(ALL_TEST_FOLDERS))
-ALL_TESTS := $(foreach TEST,$(ALL_TESTS),$(TEST)$(EXT))
+ALL_DAY1_TESTS := $(foreach TEST,$(ALL_TESTS),$(TEST)$(EXT))
+ALL_DAY2_TESTS := $(foreach TEST,$(ALL_TESTS),$(TEST)_2$(EXT))
 
 %$(EXT):
 	gnatmake $(SWITCHES) $(INCLUDES) $*-src/$*
@@ -35,4 +36,4 @@ clean:
 	rm *.o
 	rm *.ali
 
-all: $(ALL_TESTS)
+all: $(ALL_DAY1_TESTS) $(ALL_DAY2_TESTS)
