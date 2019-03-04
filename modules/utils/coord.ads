@@ -9,6 +9,12 @@ package Coord is
       y : Integer;
    end record;
 
+   type Box is
+   record
+      min : Coordinate;
+      max : Coordinate;
+   end record;
+
    function To_String (c : in Coordinate) return String;
    function Hash  (c : in Coordinate) return Ada.Containers.Hash_Type;
    function From_String (s : in String) return Coordinate;
@@ -24,5 +30,7 @@ package Coord is
    package CoordVector is new Ada.Containers.Vectors
       (Element_Type => Coordinate,
       Index_Type => Natural);
+
+   function GetBounds (coords : CoordVector.Vector) return Box;
 
 end Coord;
