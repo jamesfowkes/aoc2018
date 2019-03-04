@@ -12,9 +12,9 @@ procedure d4_2 is
    stdin_arr : constant Types.StringArray := get_stdin.get_strs;
    activities : Activity.ActivityVector.Vector;
    guard_activity_map : Guard.GuardActivityMap.Map;
-   MinuteAndFrequency : Activity.MinuteFrequencyTuple;
+   minute_and_frequency : Activity.MinuteFrequencyTuple;
 
-   MinuteAndFrequencyMostAsleep : Activity.MinuteFrequencyTuple := (min => 0, freq => -1);
+   minute_and_frequency_most_asleep : Activity.MinuteFrequencyTuple := (min => 0, freq => -1);
 
    GuardMostAsleep : Integer;
 begin
@@ -31,21 +31,21 @@ begin
 
    for C in guard_activity_map.Iterate loop
 
-      MinuteAndFrequency := Activity.GetMostFrequentMinuteAsleep (Guard.GuardActivityMap.Element (C));
+      minute_and_frequency := Activity.GetMostFrequentMinuteAsleep (Guard.GuardActivityMap.Element (C));
 
-      if MinuteAndFrequency.freq > MinuteAndFrequencyMostAsleep.freq then
-         MinuteAndFrequencyMostAsleep := MinuteAndFrequency;
+      if minute_and_frequency.freq > minute_and_frequency_most_asleep.freq then
+         minute_and_frequency_most_asleep := minute_and_frequency;
          GuardMostAsleep := Guard.GuardActivityMap.Key (C);
       end if;
    end loop;
 
-   Ada.Integer_Text_IO.Put (MinuteAndFrequencyMostAsleep.min, Width => 0);
+   Ada.Integer_Text_IO.Put (minute_and_frequency_most_asleep.min, Width => 0);
    Ada.Text_IO.Put_Line ("");
 
    Ada.Integer_Text_IO.Put (GuardMostAsleep, Width => 0);
    Ada.Text_IO.Put_Line ("");
 
-   Ada.Integer_Text_IO.Put (MinuteAndFrequencyMostAsleep.min * GuardMostAsleep, Width => 0);
+   Ada.Integer_Text_IO.Put (minute_and_frequency_most_asleep.min * GuardMostAsleep, Width => 0);
    Ada.Text_IO.Put_Line ("");
 
 end d4_2;
