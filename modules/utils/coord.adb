@@ -34,7 +34,12 @@ package body Coord is
       c1 : in Coordinate;
       c2 : in Coordinate) return Integer is
    begin
-      return abs (c1.x - c2.x) + abs (c1.y - c2.y);
+      return Manhattan (c1, c2.x, c2.y);
+   end Manhattan;
+
+   function Manhattan (c1 : in Coordinate; x : Integer; y : Integer) return Integer is
+   begin
+      return abs (c1.x - x) + abs (c1.y - y);
    end Manhattan;
 
    function Under (c1 : in Coordinate; c2 : in Coordinate) return Boolean is

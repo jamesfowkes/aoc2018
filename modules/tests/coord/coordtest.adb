@@ -43,8 +43,10 @@ package body CoordTest is
       TestCoordinate1 : Coord.Coordinate := (x => 0, y => 0);
       TestCoordinate2 : Coord.Coordinate := (x => 0, y => 0);
    begin
-      Assert (Coord.Manhattan (TestCoordinate1, TestCoordinate2) = 0, "Distance between equal coordinates should equal 0");
-      Assert (Coord.Manhattan (TestCoordinate2, TestCoordinate1) = 0, "Distance between equal coordinates should equal 0");
+      Assert (Coord.Manhattan (TestCoordinate1, TestCoordinate2) = 0,
+         "Distance between equal coordinates should equal 0");
+      Assert (Coord.Manhattan (TestCoordinate2, TestCoordinate1) = 0,
+         "Distance between equal coordinates should equal 0");
       TestCoordinate1.x := 1;
       Assert (Coord.Manhattan (TestCoordinate1, TestCoordinate2) = 1, "Distance between coordinates should equal 1");
       Assert (Coord.Manhattan (TestCoordinate2, TestCoordinate1) = 1, "Distance between coordinates should equal 1");

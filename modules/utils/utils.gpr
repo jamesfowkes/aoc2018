@@ -10,7 +10,7 @@ project Utils is
 
     package Compiler is
         for Default_Switches ("ada") use
-                ("-g", "-O1", "-gnat2012", "-gnatwa.Xe", "-gnaty", "-gnata", "-gnatf");
+            ("-g", "-O1", "-gnat2012", "-gnatwa.Xe", "-gnaty", "-gnata", "-gnatf", "-gnatyM120");
     end Compiler;
 
 end Utils;
