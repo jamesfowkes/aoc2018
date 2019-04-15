@@ -1,5 +1,6 @@
 with Ada.Strings.Unbounded;
 with Ada.Text_IO;
+with Ada.Integer_Text_IO;
 
 with Coord;
 with Grid;
@@ -12,7 +13,6 @@ procedure d6 is
 
    stdin_arr : constant Types.StringArray := get_stdin.get_strs;
    coords : Coord.CoordVector.Vector;
-   new_grid : Grid.GridType (0 .. 1,  0 .. 1);
 
 begin
 
@@ -24,7 +24,16 @@ begin
       Ada.Text_IO.Put_Line (Coord.To_String (C));
    end loop;
 
-   new_grid := Grid.parse_coords (coords);
-   Grid.print (new_grid);
+   declare
+      new_grid : constant Grid.GridType := Grid.parse_coords (coords);
+   begin
+      Ada.Text_IO.Put ("Got a ");
+      Ada.Integer_Text_IO.Put (new_grid'Last (1), Width => 0);
+      Ada.Text_IO.Put ("x");
+      Ada.Integer_Text_IO.Put (new_grid'Last (2), Width => 0);
+      Ada.Text_IO.Put_Line (" grid");
+
+      Grid.print (new_grid);
+   end;
 
 end d6;
