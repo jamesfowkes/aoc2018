@@ -16,6 +16,8 @@ ALL_TESTS = $(subst -src, , $(ALL_TEST_FOLDERS))
 ALL_DAY1_TESTS := $(foreach TEST,$(ALL_TESTS),$(TEST)$(EXT))
 ALL_DAY2_TESTS := $(foreach TEST,$(ALL_TESTS),$(TEST)_2$(EXT))
 
+ALL_CLEAN_TARGETS := $(foreach TEST,$(ALL_TESTS), $(TEST)-clean)
+
 %$(EXT):
 	gnatmake $(SWITCHES) $(INCLUDES) $*-src/$*
 	mv $* $*-src
@@ -29,11 +31,11 @@ ALL_DAY2_TESTS := $(foreach TEST,$(ALL_TESTS),$(TEST)_2$(EXT))
 	cat $*-src/$*.txt | dos2unix | ./$*-src/$*_2$(EXT) $(ARGS)
 
 %-clean:
-	rm $*-src/$*$(EXT)
-	rm $*-src/$*_2$(EXT)
+	rm -f $*-src/$*$(EXT)
+	rm -f $*-src/$*_2$(EXT)
 
-clean:
-	rm *.o
-	rm *.ali
+clean: $(ALL_CLEAN_TARGETS)
+	rm -f *.o
+	rm -f *.ali
 
 all: $(ALL_DAY1_TESTS) $(ALL_DAY2_TESTS)
