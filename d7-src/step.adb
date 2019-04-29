@@ -14,11 +14,6 @@ package body Step is
       return new_step;
    end Create;
 
-   procedure AddDependency (step_record : out StepRecord; dep : Character) is
-   begin
-      step_record.deps.Append (dep);
-   end AddDependency;
-
    function TryRun (step_record : StepRecord; other_steps : StepMap.Map) return Boolean is
    begin
       if Step.UnresolvedCount (step_record, other_steps) = 0 and step_record.done = False then

@@ -35,7 +35,6 @@ package Step is
    function UnresolvedCount (step_map : StepMap.Map) return Integer;
 
    procedure RunMap  (step_map : in out StepMap.Map);
-   procedure AddDependency (step_record : out StepRecord; dep : Character);
    procedure Print (to_print : StepRecord; other_steps : StepMap.Map);
 
 end Step;
