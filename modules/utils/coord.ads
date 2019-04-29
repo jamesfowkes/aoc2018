@@ -31,6 +31,6 @@ package Coord is
       (Element_Type => Coordinate,
       Index_Type => Natural);
 
-   function GetBounds (coords : CoordVector.Vector) return Box;
+   function GetBounds (coords : CoordVector.Vector; add_border : Integer := 0) return Box;
 
 end Coord;

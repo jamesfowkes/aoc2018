@@ -20,13 +20,13 @@ ALL_DAY2_TESTS := $(foreach TEST,$(ALL_TESTS),$(TEST)_2$(EXT))
 	gnatmake $(SWITCHES) $(INCLUDES) $*-src/$*
 	mv $* $*-src
 	mv $*.* $*-src
-	cat $*-src/$*.txt | dos2unix | ./$*-src/$*$(EXT)
+	cat $*-src/$*.txt | dos2unix | ./$*-src/$*$(EXT) $(ARGS)
 
 %_2$(EXT):
 	gnatmake $(SWITCHES) $(INCLUDES) $*-src/$*_2
 	mv $*_2 $*-src
 	mv $*_2.* $*-src
-	cat $*-src/$*.txt | dos2unix | ./$*-src/$*_2$(EXT)
+	cat $*-src/$*.txt | dos2unix | ./$*-src/$*_2$(EXT) $(ARGS)
 
 %-clean:
 	rm $*-src/$*$(EXT)

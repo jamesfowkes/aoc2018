@@ -58,17 +58,17 @@ package body Coord is
    begin return c1.x > c2.x;
    end RightOf;
 
-   function GetBounds (coords : CoordVector.Vector) return Box is
+   function GetBounds (coords : CoordVector.Vector; add_border : Integer := 0) return Box is
       bounds : Box := (
          min => (x => Integer'Last, y => Integer'Last),
          max => (x => Integer'First, y => Integer'First)
       );
    begin
       for C : Coord.Coordinate of coords loop
-         bounds.min.x := Integer'Min (C.x, bounds.min.x);
-         bounds.min.y := Integer'Min (C.y, bounds.min.y);
-         bounds.max.x := Integer'Max (C.x, bounds.max.x);
-         bounds.max.y := Integer'Max (C.y, bounds.max.y);
+         bounds.min.x := Integer'Min (C.x, bounds.min.x) - add_border;
+         bounds.min.y := Integer'Min (C.y, bounds.min.y) - add_border;
+         bounds.max.x := Integer'Max (C.x, bounds.max.x) + add_border;
+         bounds.max.y := Integer'Max (C.y, bounds.max.y) + add_border;
       end loop;
       return bounds;
    end GetBounds;

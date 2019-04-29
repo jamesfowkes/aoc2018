@@ -25,7 +25,7 @@ begin
    end loop;
 
    declare
-      new_grid : constant Grid.GridType := Grid.parse_coords (coords);
+      new_grid : constant Grid.GridType := Grid.parse_coords_by_closest_coords (coords);
       found_area : Grid.GridArea;
    begin
       Ada.Text_IO.Put ("Got a ");
@@ -34,7 +34,7 @@ begin
       Ada.Integer_Text_IO.Put (new_grid'Last (2) - new_grid'First (2), Width => 0);
       Ada.Text_IO.Put_Line (" grid");
 
-      --  Grid.print (new_grid);
+      Grid.print (new_grid, Grid.print_square_letter'Access);
 
       found_area := Grid.find_largest_area_by_closest_distance (new_grid);
 
