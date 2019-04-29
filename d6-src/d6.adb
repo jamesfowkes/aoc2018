@@ -34,9 +34,9 @@ begin
       Ada.Integer_Text_IO.Put (new_grid'Last (2) - new_grid'First (2), Width => 0);
       Ada.Text_IO.Put_Line (" grid");
 
-      Grid.print (new_grid);
+      --  Grid.print (new_grid);
 
-      found_area := Grid.find_largest_area (new_grid);
+      found_area := Grid.find_largest_area_by_closest_distance (new_grid);
 
       Ada.Text_IO.Put ("Largest area is ");
       Ada.Text_IO.Put (found_area.coord_letter);

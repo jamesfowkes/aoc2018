@@ -122,7 +122,7 @@ package body Grid is
 
    end find_border_chars;
 
-   function find_largest_area (to_search : GridType) return GridArea is
+   function find_largest_area_by_closest_distance (to_search : GridType) return GridArea is
       xmin : constant Integer := to_search'First (1) + 1;
       ymin : constant Integer := to_search'First (2) + 1;
       xmax : constant Integer := to_search'Last (1) - 1;
@@ -161,5 +161,5 @@ package body Grid is
          end if;
       end loop;
       return largest_area;
-   end find_largest_area;
+   end find_largest_area_by_closest_distance;
 end Grid;

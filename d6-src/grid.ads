@@ -31,7 +31,7 @@ package Grid is
 
    procedure print (to_print : GridType);
    procedure print_square (to_print : GridSquare);
-   function find_largest_area (to_search : GridType) return GridArea;
+   function find_largest_area_by_closest_distance (to_search : GridType) return GridArea;
    function find_border_chars (to_search : GridType) return utils.CharacterVector.Vector;
 
 end Grid;
