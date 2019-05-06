@@ -28,6 +28,7 @@ package Step is
       Element_Type => StepRecord
    );
 
+   procedure AppendToMap (steps : in out Step.StepMap.Map; parsed_step : in Step.ParsedStep);
    function Create (name : Character) return StepRecord;
    function FromString (s : in UStr.Unbounded_String) return ParsedStep;
    function TryRun (step_record : StepRecord; other_steps : StepMap.Map) return Boolean;

@@ -11,16 +11,7 @@ procedure d7 is
 begin
    for I in stdin'Range loop
       parsed_step := Step.FromString (stdin (I));
-
-      if not steps.Contains (parsed_step.step) then
-         steps.Insert (parsed_step.step, New_Item => Step.Create (parsed_step.step));
-      end if;
-
-      if not steps.Contains (parsed_step.depends) then
-         steps.Insert (parsed_step.depends, New_Item => Step.Create (parsed_step.depends));
-      end if;
-
-      steps (parsed_step.step).deps.Append (parsed_step.depends);
+      Step.AppendToMap (steps, parsed_step);
    end loop;
 
    while Step.UnresolvedCount (steps) > 0 loop

@@ -4,6 +4,19 @@ with Step;
 
 package body Step is
 
+   procedure AppendToMap (steps : in out Step.StepMap.Map; parsed_step : in Step.ParsedStep) is
+   begin
+      if not steps.Contains (parsed_step.step) then
+         steps.Insert (parsed_step.step, New_Item => Step.Create (parsed_step.step));
+      end if;
+
+      if not steps.Contains (parsed_step.depends) then
+         steps.Insert (parsed_step.depends, New_Item => Step.Create (parsed_step.depends));
+      end if;
+
+      steps (parsed_step.step).deps.Append (parsed_step.depends);
+   end AppendToMap;
+
    function Create (name : Character) return StepRecord is
       new_step  : StepRecord;
       dependencies  : Step.DependencyVector.Vector;
