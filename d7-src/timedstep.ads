@@ -19,8 +19,13 @@ package TimedStep is
       Element_Type => TimedStepRecord
    );
 
-   procedure AppendToMap (steps : in out TimedStep.TimedStepMap.Map; parsed_step : in Step.ParsedStep);
-   function Create (name : Character) return TimedStepRecord;
+   procedure AppendToMap (
+      steps : in out TimedStep.TimedStepMap.Map;
+      parsed_step : in Step.ParsedStep;
+      time_offset : in Integer
+   );
+
+   function Create (name : Character; time_offset : Integer) return TimedStepRecord;
    function TryRun (step_record : TimedStepRecord; other_steps : TimedStepMap.Map) return Boolean;
    function UnresolvedCount (step_record : TimedStepRecord; other_steps : TimedStepMap.Map) return Integer;
    function UnresolvedCount (step_map : TimedStepMap.Map) return Integer;

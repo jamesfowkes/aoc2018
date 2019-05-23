@@ -10,11 +10,12 @@ procedure d7_2 is
    steps : TimedStep.TimedStepMap.Map;
    parsed_step : Step.ParsedStep;
    nelves : constant Integer := Integer'Value (Ada.Command_Line.Argument (1));
+   time_offset : constant Integer := Integer'Value (Ada.Command_Line.Argument (2));
 begin
 
    for I in stdin'Range loop
       parsed_step := Step.FromString (stdin (I));
-      TimedStep.AppendToMap (steps, parsed_step);
+      TimedStep.AppendToMap (steps, parsed_step, time_offset);
    end loop;
 
    for S in TimedStep.TimedStepMap.Iterate (steps) loop

@@ -4,7 +4,9 @@ else
     EXT=
 endif
 
-SWITCHES = -gnat12 -gnatf -gnatQ -gnatwa -gnatyy -gnatwe -gnatyM120
+WARNINGS_AS_ERRORS = -gnatwe
+#SWITCHES = -gnat12 -gnatf -gnatQ -gnatwa -gnatyy  -gnatyM120 $(WARNINGS_AS_ERRORS)
+SWITCHES = -gnat12 -gnatf -gnatQ -gnatwa -gnatyy  -gnatyM120
 
 INCLUDES = -I. \
 	-Imodules/binarytree \
