@@ -1,6 +1,5 @@
-with Ada.Unchecked_Deallocation;
---  with Ada.Integer_Text_IO;
---  with Ada.Text_IO;
+with Ada.Text_IO;
+with Ada.Integer_Text_IO;
 
 package body Queue is
 
@@ -9,15 +8,14 @@ package body Queue is
    ----------
 
    procedure Push (List : in out Queue_Type; Item : in Element_Type) is
-      Temp : constant Queue_Ptr := new Queue_Element'(Item, null);
+      New_Item : constant Queue_Ptr := new Queue_Element'(Item, null);
    begin
-      if List.Head = null then
-         List.Head := Temp;
-      end if;
-      if List.Tail /= null then
-         List.Tail.Next := Temp;
+      if not Is_Empty (List) then
+         List.Tail.Next := New_Item;
+         List.Tail := New_Item;
       else
-         List.Tail := Temp;
+         List.Head := New_Item;
+         List.Tail := New_Item;
       end if;
    end Push;
 
@@ -26,20 +24,13 @@ package body Queue is
    ---------
 
    procedure Pop (List : in out Queue_Type; Item : out Element_Type) is
-      procedure Free is new Ada.Unchecked_Deallocation (
-         Queue_Element, Queue_Ptr
-      );
-      Temp : Queue_Ptr := List.Tail;
    begin
       if List.Head = null then
          raise Empty_Error;
       end if;
-      Item := List.Tail.Value;
-      List.Tail := List.Tail.Next;
-      if List.Tail = null then
-         List.Head := null;
-      end if;
-      Free (Temp);
+
+      Item := List.Head.Value;
+      List.Head := List.Head.Next;
    end Pop;
 
    procedure Peek (List : in out Queue_Type; Item : out Element_Type) is
@@ -47,7 +38,7 @@ package body Queue is
       if List.Head = null then
          raise Empty_Error;
       else
-         Item := List.Tail.Value;
+         Item := List.Head.Value;
       end if;
    end Peek;
 
@@ -69,7 +60,7 @@ package body Queue is
          return 0;
       else
          count := 1;
-         node := List.Head;
+         node := List.Tail;
          while node.Next /= null loop
             --  Ada.Integer_Text_IO.Put (node.Value);
             --  Ada.Text_IO.Put_Line ("");
@@ -79,5 +70,25 @@ package body Queue is
       end if;
       return count;
    end Length;
+
+   procedure Print (List : Queue_Type; PrinterFn : QueueElementPrinterType) is
+      element : Queue_Ptr;
+   begin
+      if Is_Empty (List) then
+         Ada.Text_IO.Put_Line ("Queue Empty");
+         return;
+      else
+         Ada.Text_IO.Put ("Queue has ");
+         Ada.Integer_Text_IO.Put (Length (List), Width => 0);
+         Ada.Text_IO.Put (" elements: ");
+      end if;
+
+      element := List.Tail;
+      while element.Next = null loop
+         PrinterFn (element.Value);
+         Ada.Text_IO.Put (",");
+         element := element.Next;
+      end loop;
+   end Print;
 
 end Queue;
