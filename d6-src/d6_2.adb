@@ -14,9 +14,17 @@ procedure d6_2 is
 
    stdin_arr : constant Types.StringArray := get_stdin.get_strs;
    coords : Coord.CoordVector.Vector;
-   distance_limit : constant Integer := Integer'Value (Ada.Command_Line.Argument (1));
+   distance_limit : Integer;
    area : Integer;
 begin
+
+   if Ada.Command_Line.Argument_Count /= 1 then
+      Ada.Text_IO.Put ("Expected distance as argument 1");
+      Ada.Command_Line.Set_Exit_Status (1);
+      return;
+   else
+      distance_limit := Integer'Value (Ada.Command_Line.Argument (1));
+   end if;
 
    for I in stdin_arr'Range loop
       coords.Append (Coord.From_String (UStr.To_String (stdin_arr (I))));
