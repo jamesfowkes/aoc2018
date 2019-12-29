@@ -22,3 +22,7 @@ lib/
 # Auto-generated project files
 auto.cgpr
 
+# Logging Outputs
+*.stderr
+*.stdout
+
